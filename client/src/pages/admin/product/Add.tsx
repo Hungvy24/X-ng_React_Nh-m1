@@ -128,11 +128,14 @@ function AdminProductAdd() {
                           <InputLabel>Category</InputLabel>
                           <Select label="Category" {...input} error>
                             <MenuItem value="">Select</MenuItem>
-                            <MenuItem value={"66860195be9e04f02ea662d6"}>
-                              Thoi trang
+                            <MenuItem value={"6689fcbf888943b629ce6ebc"}>
+                              Sản Phẩm 1
                             </MenuItem>
-                            <MenuItem value={"668601a7be9e04f02ea662d9"}>
-                              Phu Kien
+                            <MenuItem value={"6689fd4e888943b629ce6ec2"}>
+                              Sản Phẩm 2
+                            </MenuItem>
+                            <MenuItem value={"6689fd31888943b629ce6ec0"}>
+                              Sản Phẩm 3
                             </MenuItem>
                           </Select>
                           {meta.touched && meta.error && (

@@ -4,6 +4,7 @@ import AdminProductList from "./pages/admin/product/List";
 import AdminProductAdd from "./pages/admin/product/Add";
 import AdminProductEdit from "./pages/admin/product/Edit";
 import Homepage from "./pages/Home/Homepage";
+import ProductDetail from "./pages/Home/ProductDetail";
 
 const routeConfig = [
   {
@@ -27,6 +28,9 @@ const routeConfig = [
   {
     path: "/",
     element: <Homepage/>
+  },{
+    path: "product/:id",
+    element: <ProductDetail/>
   }
 ];
 

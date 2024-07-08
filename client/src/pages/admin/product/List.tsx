@@ -59,8 +59,8 @@ function AdminProductList() {
       <Container>
         <Flash isShow={showFlash} />
         <Stack gap={2}>
-          <Typography variant="h2" textAlign={"center"}>
-            Product List
+          <Typography variant="h4" textAlign={"center"}>
+              Products List
           </Typography>
           <Link to="/admin/product/add">
             <Button variant="contained">Add Product</Button>
