@@ -5,6 +5,7 @@ import AdminProductAdd from "./pages/admin/product/Add";
 import AdminProductEdit from "./pages/admin/product/Edit";
 import Homepage from "./pages/Home/Homepage";
 import ProductDetail from "./pages/Home/ProductDetail";
+import HomeLayout from "./layouts/HomeLayout";
 
 const routeConfig = [
   {
@@ -26,12 +27,19 @@ const routeConfig = [
     ],
   },
   {
-    path: "/",
-    element: <Homepage/>
-  },{
-    path: "product/:id",
-    element: <ProductDetail/>
+    path: '/',
+    element: <HomeLayout/>,
+    children: [
+      {
+        path: "/",
+        element: <Homepage/>
+      },{
+        path: "product/:id",
+        element: <ProductDetail/>
+      }
+    ]
   }
+  
 ];
 
 function App() {

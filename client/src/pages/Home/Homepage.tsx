@@ -22,7 +22,7 @@ const Homepage = (props: Props) => {
   })
   return (
     <div>
-      <Stack>
+      <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px" }}>
       {products.map((product:Product) => (
             <Card sx={{ maxWidth: 345, margin: "10px" }}>
             <CardMedia
@@ -46,7 +46,8 @@ const Homepage = (props: Props) => {
             <CardActions>
               <Button >Share</Button>
               <Button >Learn More</Button>
-              <Link to={`/product/${product._id}`}>Xem</Link>
+              {/* <Link to={`/product/${product._id}`}>Xem</Link> */}
+              <Button ><Link to={`/product/${product._id}`}>Xem</Link></Button>
             </CardActions>
           </Card>
           ))}

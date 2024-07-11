@@ -22,9 +22,9 @@ const ProductDetail = (props: Props) => {
     <>
     <Container>
         {product && (
-          <Stack direction={"row"} gap={3}>
-            <img src={product.image} alt="" width={"500px"} />
-            <Stack gap={3}>
+          <Stack direction={"row"} gap={3} sx={{justifyContent: "center", flexWrap: "wrap", margin: "10px"}}>
+            <img src={product.image} alt="" width={"400px"} />
+            <Stack gap={3} sx={{width: "500px", padding: "10px"}}>
               <Typography component="h1" fontSize={"26px"}>
                 {product.title}
               </Typography>
@@ -33,7 +33,7 @@ const ProductDetail = (props: Props) => {
               </Typography>
               
               <Typography>{product.description}</Typography>
-              <Button variant="outlined">Add to cart</Button>
+              <Button variant="outlined" sx={{width: "100%", height: "40px"}}>Add to cart</Button>
             </Stack>
           </Stack>
         )}
