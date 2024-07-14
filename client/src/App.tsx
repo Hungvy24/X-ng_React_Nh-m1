@@ -6,6 +6,7 @@ import AdminProductEdit from "./pages/admin/product/Edit";
 import Homepage from "./pages/Home/Homepage";
 import ProductDetail from "./pages/Home/ProductDetail";
 import HomeLayout from "./layouts/HomeLayout";
+import Register from "./pages/register";
 
 const routeConfig = [
   {
@@ -27,19 +28,23 @@ const routeConfig = [
     ],
   },
   {
-    path: '/',
-    element: <HomeLayout/>,
+    path: "/",
+    element: <HomeLayout />,
     children: [
       {
         path: "/",
-        element: <Homepage/>
-      },{
+        element: <Homepage />,
+      },
+      {
         path: "product/:id",
-        element: <ProductDetail/>
-      }
-    ]
-  }
-  
+        element: <ProductDetail />,
+      },
+    ],
+  },
+  {
+    path: "register",
+    element: <Register />,
+  },
 ];
 
 function App() {
