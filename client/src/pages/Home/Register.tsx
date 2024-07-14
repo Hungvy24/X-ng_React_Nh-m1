@@ -1,62 +1,88 @@
-import { Message } from "@mui/icons-material";
-import { Button, Container, Stack, TextField, Typography } from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
 import axios from "axios";
-import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { ValidationErrors } from "final-form";
+import { Field, Form } from "react-final-form";
 import { useNavigate } from "react-router-dom";
+import { InputText } from "src/components/element/InputText";
+import { MIN_PASSWORD } from "src/conts";
+import isEmail from "validator/lib/isEmail";
 
-type FormRegister = {
+type RegisterFormParams = {
   username: string;
   email: string;
   password: string;
 };
+
 const Register = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormRegister>();
-
-  const onSubmit: SubmitHandler<FormRegister> = async (data) => {
-    console.log(data);
-    const navigate = useNavigate();
-
-    try {
-      await axios.post("http://localhost:3000/register", data);
-      alert("Đăng ký thành công");
-      navigate("/login");
-    } catch (error) {
-      navigate("/not-found");
-    }
+  const nav = useNavigate();
+  const validate = (values: RegisterFormParams) => {
+    const { username, email, password } = values;
+    const errors: ValidationErrors = {};
+    if (!username) errors.username = "Can nhap username vao";
+    if (!email) errors.email = "Can nhap email vao";
+    if (email && !isEmail(email)) errors.email = "Chua dung dinh dang email";
+    if (!password) errors.password = "Can nhap password vao";
+    if (password && password.length < MIN_PASSWORD)
+      errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
+    return errors;
   };
+
+  const onSubmit = async (data: RegisterFormParams) => {
+    try {
+      await axios.post("/auth/register", data);
+      nav("/login");
+    } catch (error) {}
+  };
+
   return (
     <Container>
       <Typography variant="h2" textAlign={"center"} mb={2}>
         Register
       </Typography>
-      <form action="" onSubmit={handleSubmit(onSubmit)}>
-        <Stack gap={2}>
-          <TextField
-            label="name"
-            {...register("username", { required: "User is required" })}
-          />
-          <div> {errors?.username?.message}</div>
-          <TextField
-            label="email"
-            {...register("email", { required: "Email is required" })}
-          />
-          <div>{errors?.email?.message}</div>
-
-          <TextField
-            label="password"
-            {...register("password", { required: "Password is required" })}
-          />
-          <div>{errors?.password?.message}</div>
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
-        </Stack>
-      </form>
+      <Form
+        onSubmit={onSubmit}
+        validate={validate}
+        render={({ values }) => {
+          return (
+            <Stack gap={2}>
+              <Field
+                name="username"
+                render={({ input, meta }) => (
+                  <InputText
+                    input={input}
+                    label={"Username"}
+                    messageError={meta.touched && meta.error}
+                  />
+                )}
+              />
+              <Field
+                name="email"
+                render={({ input, meta }) => (
+                  <InputText
+                    input={input}
+                    label={"Email"}
+                    messageError={meta.touched && meta.error}
+                  />
+                )}
+              />
+              <Field
+                name="password"
+                render={({ input, meta }) => (
+                  <InputText
+                    input={input}
+                    label={"Password"}
+                    messageError={meta.touched && meta.error}
+                    type="password"
+                  />
+                )}
+              />
+              <Button variant="contained" onClick={() => onSubmit(values)}>
+                Submit
+              </Button>
+            </Stack>
+          );
+        }}
+      />
     </Container>
   );
 };
