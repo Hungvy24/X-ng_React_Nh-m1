@@ -46,8 +46,8 @@ const Homepage = () => {
               </Typography>
             </CardContent>
             <CardActions sx={{ width: "100%", justifyContent: "center" }}>
-              <Button variant="contained">Share</Button>
-              <Button variant="contained">Learn More</Button>
+              <Button variant="contained" sx={{bgcolor: "green"}}>Share</Button>
+              <Button variant="contained" sx={{bgcolor: "red"}}>Learn More</Button>
               <Link to={`/product/${product._id}`} style={{textDecoration: "none", color: "white"}}><Button variant="contained">Xem</Button></Link>
             </CardActions>
           </Card>

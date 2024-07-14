@@ -1,5 +1,11 @@
-function AdminProductEdit() {
-  return <h1>AdminProductEdit</h1>;
+import React from 'react'
+
+type Props = {}
+
+const Edit = (props: Props) => {
+  return (
+    <div>Edit</div>
+  )
 }
 
-export default AdminProductEdit;
+export default Edit

@@ -96,7 +96,7 @@ function AdminProductList() {
                         gap={3}
                         justifyContent={"center"}
                       >
-                        <Link to={""}><Button variant="contained">Edit</Button></Link>
+                        <Link to={`/admin/product/edit/${product._id}`}><Button variant="contained">Edit</Button></Link>
                         <Button
                           variant="contained"
                           sx={{ bgcolor: "red" }}

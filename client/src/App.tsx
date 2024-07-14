@@ -7,6 +7,8 @@ import Homepage from "./pages/Home/Homepage";
 import ProductDetail from "./pages/Home/ProductDetail";
 import HomeLayout from "./layouts/HomeLayout";
 import Register from "./pages/Home/Register";
+import Login from "./pages/Home/Login";
+import NotFound from "./components/NotFound";
 
 const routeConfig = [
   {
@@ -25,6 +27,10 @@ const routeConfig = [
         path: "product/edit/:id",
         element: <AdminProductEdit />,
       },
+      {
+        path: 'NotFound',
+        element: <NotFound/>
+      }
     ],
   },
   {
@@ -42,6 +48,14 @@ const routeConfig = [
       {
         path: 'register',
         element: <Register/>
+      },
+      {
+        path: "login",
+        element: <Login/>,
+      },
+      {
+        path: 'NotFound',
+        element: <NotFound/>
       }
     ],
   },

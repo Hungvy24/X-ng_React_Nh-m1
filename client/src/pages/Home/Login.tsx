@@ -7,41 +7,41 @@ import { InputText } from "src/components/element/InputText";
 import { MIN_PASSWORD } from "src/conts";
 import isEmail from "validator/lib/isEmail";
 
-type RegisterFormParams = {
-  username: string;
+type LoginFormParams = {
   email: string;
   password: string;
-  confrimPassword: string;
 };
 
-const Register = () => {
-  const nav = useNavigate();
-  const validate = (values: RegisterFormParams) => {
-    const { username, email, password } = values;
+
+const Login = () => {
+    const naigate = useNavigate();
+  const validate = (values: LoginFormParams) => {
+    const { email, password } = values;
     const errors: ValidationErrors = {};
-    if (!username) errors.username = "Can nhap username vao";
     if (!email) errors.email = "Can nhap email vao";
     if (email && !isEmail(email)) errors.email = "Chua dung dinh dang email";
     if (!password) errors.password = "Can nhap password vao";
     if (password && password.length < MIN_PASSWORD)
       errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
-    if (password !== values.confrimPassword)
-      errors.confrimPassword = "Password khong khop";
     return errors;
   };
 
-  const onSubmit = async (data: RegisterFormParams) => {
+  const onSubmit = async (values: LoginFormParams) => {
     try {
-      await axios.post("/auth/register", data);
-      nav("/login");
-    } catch (error) {}
+      const { data } = await axios.post("/auth/login", values);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user)); // luu object
+      naigate("/");
+    } catch (error) {
+        naigate('/NotFound')
+    }
   };
 
   return (
     <Container sx={{ height: "100vh", padding: "20px" }}>
       <Stack maxWidth="sm" sx={{ padding: 2, margin: "auto", border: "1px solid #ccc", borderRadius: 5, display: "flex", flexDirection: "column", gap: 2 }}>
       <Typography variant="h4" textAlign={"center"} mb={2}>
-        Register
+        Login
       </Typography>
       <Form
         onSubmit={onSubmit}
@@ -49,16 +49,6 @@ const Register = () => {
         render={({ values }) => {
           return (
             <Stack gap={2}>
-              <Field
-                name="username"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Username"}
-                    messageError={meta.touched && meta.error}
-                  />
-                )}
-              />
               <Field
                 name="email"
                 render={({ input, meta }) => (
@@ -92,4 +82,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

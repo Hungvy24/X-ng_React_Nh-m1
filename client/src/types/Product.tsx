@@ -22,3 +22,11 @@ export type ProductForm = {
   category: string;
   isShow: boolean;
 };
+export type ProductFormParams = {
+  title: string;
+  price: number;
+  image: string;
+  description: string;
+  category: string;
+  isShow: boolean;
+};

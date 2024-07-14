@@ -20,10 +20,10 @@ const ProductDetail = (props: Props) => {
     
   return (
     <>
-    <Container>
+    <Container sx={{padding: "10px", width: "100%", height: "100vh"}}>
         {product && (
           <Stack direction={"row"} gap={3} sx={{justifyContent: "center", flexWrap: "wrap", margin: "10px"}}>
-            <img src={product.image} alt="" width={"400px"} />
+            <img src={product.image} alt="" width={"250px"} />
             <Stack gap={3} sx={{width: "500px", padding: "10px"}}>
               <Typography component="h1" fontSize={"26px"}>
                 {product.title}
