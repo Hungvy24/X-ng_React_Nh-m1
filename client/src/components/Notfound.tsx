@@ -7,7 +7,7 @@ const NotFound = () => (
     <Stack sx={{ textAlign: 'center' }}>
     <Box sx={{ padding: 2 }}>
     <img
-      src="https://www.pngitem.com/pimgs/m/561-5616833_image-not-found-png-not-found-404-png.png"
+      src="https://cdn.tgdd.vn/hoi-dap/580732/loi-404-not-found-la-gi-9-cach-khac-phuc-loi-404-not-3-800x534.jpg"
       alt="not-found"
       width="1000" 
       height="500"
