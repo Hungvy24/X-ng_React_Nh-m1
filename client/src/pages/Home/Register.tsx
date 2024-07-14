@@ -25,8 +25,6 @@ const Register = () => {
     if (!password) errors.password = "Can nhap password vao";
     if (password && password.length < MIN_PASSWORD)
       errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
-    if (password !== values.confrimPassword)
-      errors.confrimPassword = "Password khong khop";
     return errors;
   };
 
@@ -40,7 +38,7 @@ const Register = () => {
   return (
     <Container sx={{ height: "100vh", padding: "20px" }}>
       <Stack maxWidth="sm" sx={{ padding: 2, margin: "auto", border: "1px solid #ccc", borderRadius: 5, display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h4" textAlign={"center"} mb={2}>
+      <Typography variant="h2" textAlign={"center"} mb={2}>
         Register
       </Typography>
       <Form
