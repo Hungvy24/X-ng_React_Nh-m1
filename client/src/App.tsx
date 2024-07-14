@@ -6,7 +6,7 @@ import AdminProductEdit from "./pages/admin/product/Edit";
 import Homepage from "./pages/Home/Homepage";
 import ProductDetail from "./pages/Home/ProductDetail";
 import HomeLayout from "./layouts/HomeLayout";
-import Register from "./pages/register";
+import Register from "./pages/Home/Register";
 
 const routeConfig = [
   {
@@ -39,11 +39,11 @@ const routeConfig = [
         path: "product/:id",
         element: <ProductDetail />,
       },
+      {
+        path: 'register',
+        element: <Register/>
+      }
     ],
-  },
-  {
-    path: "register",
-    element: <Register />,
   },
 ];
 
