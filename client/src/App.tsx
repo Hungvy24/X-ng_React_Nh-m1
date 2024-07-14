@@ -7,6 +7,7 @@ import Homepage from "./pages/Home/Homepage";
 import ProductDetail from "./pages/Home/ProductDetail";
 import HomeLayout from "./layouts/HomeLayout";
 import Register from "./pages/Home/Register";
+import Notfound from "./components/Notfound";
 
 const routeConfig = [
   {
@@ -40,9 +41,13 @@ const routeConfig = [
         element: <ProductDetail />,
       },
       {
-        path: 'register',
-        element: <Register/>
-      }
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "not-found",
+        element: <Notfound />,
+      },
     ],
   },
 ];
