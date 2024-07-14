@@ -1,13 +1,13 @@
-import { Button } from '@mui/base'
-import { Card, CardActions, CardContent, CardMedia, Stack, Typography } from '@mui/material'
+
+import { Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Banner from 'src/components/Banner'
 import { Product } from 'src/types/Product'
 
-type Props = {}
 
-const Homepage = (props: Props) => {
+const Homepage = () => {
   const [products, setProducts] = useState<Product[]>([])
   useEffect(()=>{
     const getAllProduct = async () => {
@@ -21,11 +21,13 @@ const Homepage = (props: Props) => {
     getAllProduct()
   })
   return (
-    <div>
-      <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px" }}>
+    <>
+    <Banner/>
+    <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{margin: "10px", textAlign: "center"}}>Sản phẩm mới nhất</Typography>
+      <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px", padding: "10px", width: "100%" }}>
       {products.map((product:Product) => (
             <Card sx={{ maxWidth: 345, margin: "10px" }}>
-            <CardMedia
+            <CardMedia 
               component="img"
               alt="green iguana"
               height="140"
@@ -43,16 +45,15 @@ const Homepage = (props: Props) => {
                 {product.description}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button >Share</Button>
-              <Button >Learn More</Button>
-              {/* <Link to={`/product/${product._id}`}>Xem</Link> */}
-              <Button ><Link to={`/product/${product._id}`}>Xem</Link></Button>
+            <CardActions sx={{ width: "100%", justifyContent: "center" }}>
+              <Button variant="contained">Share</Button>
+              <Button variant="contained">Learn More</Button>
+              <Link to={`/product/${product._id}`} style={{textDecoration: "none", color: "white"}}><Button variant="contained">Xem</Button></Link>
             </CardActions>
           </Card>
           ))}
           </Stack>
-    </div>
+    </>
   )
 }
 

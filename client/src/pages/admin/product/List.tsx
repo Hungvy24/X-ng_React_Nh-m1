@@ -88,7 +88,7 @@ function AdminProductList() {
                     </TableCell>
                     <TableCell align="right">{product.price}</TableCell>
                     <TableCell align="right">{product.description}</TableCell>
-                    <TableCell align="right">{product.image}</TableCell>
+                    <TableCell align="right"><img src={product.image} alt="" width={100} /></TableCell>
                     <TableCell align="right">{product.category.name}</TableCell>
                     <TableCell align="right">
                       <Stack
@@ -96,7 +96,7 @@ function AdminProductList() {
                         gap={3}
                         justifyContent={"center"}
                       >
-                        <Link to={""}>Edit</Link>
+                        <Link to={""}><Button variant="contained">Edit</Button></Link>
                         <Button
                           variant="contained"
                           sx={{ bgcolor: "red" }}
