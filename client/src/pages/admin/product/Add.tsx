@@ -16,16 +16,24 @@ import axios from "axios";
 import { ValidationErrors } from "final-form";
 import { Field, Form } from "react-final-form";
 import { useNavigate } from "react-router-dom";
+import Loading from "src/components/Loading";
+import NotFound from "src/components/Notfound";
+import { useGlobalContext } from "src/context";
 import { ProductForm } from "src/types/Product";
 
 function AdminProductAdd() {
   const nav = useNavigate();
-
+  const { loading, setLoading } = useGlobalContext()
   const onSubmit = async (values: ProductForm) => {
     try {
-      await axios.post("/products", values);
+      setLoading(true)
+      await axios.post("/product22s", values);
       nav("/admin/product/list");
-    } catch (error) {}
+    } catch (error) {
+      return <NotFound />
+    } finally {
+      setLoading(false)
+    }
   };
 
   const validate = (values: ProductForm) => {
@@ -155,6 +163,9 @@ function AdminProductAdd() {
           />
         </Stack>
       </Container>
+      {loading && (
+        <Loading />
+      )}
     </>
   );
 }

@@ -18,6 +18,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmDialog from "src/components/ConfirmDialog";
 import Flash from "src/components/Flash";
+import Loading from "src/components/Loading";
+import NotFound from "src/components/Notfound";
+import { useGlobalContext } from "src/context";
 import { Product } from "src/types/Product";
 
 function AdminProductList() {
@@ -25,13 +28,17 @@ function AdminProductList() {
   const [confirm, setConfirm] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [idDelete, setIdDelete] = useState<string | null>(null);
+  const { loading, setLoading } = useGlobalContext()
 
   const getAllProduct = async () => {
     try {
+      setLoading(true)
       const { data } = await axios.get("/products");
       setProducts(data);
     } catch (error) {
-      console.log(error);
+      return <NotFound />
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,21 +53,23 @@ function AdminProductList() {
 
   const handleDelete = async () => {
     try {
+      setLoading(true)
       await axios.delete("/products/" + idDelete);
       setShowFlash(true);
       getAllProduct();
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
       <Container>
-        <Flash isShow={showFlash} />
         <Stack gap={2}>
           <Typography variant="h4" textAlign={"center"}>
-              Products List
+            Products List
           </Typography>
           <Link to="/admin/product/add">
             <Button variant="contained">Add Product</Button>
@@ -86,10 +95,10 @@ function AdminProductList() {
                     <TableCell component="th" scope="row">
                       {product.title}
                     </TableCell>
-                    <TableCell align="right">{product.price}</TableCell>
-                    <TableCell align="right">{product.description}</TableCell>
-                    <TableCell align="right"><img src={product.image} alt="" width={100} /></TableCell>
-                    <TableCell align="right">{product.category.name}</TableCell>
+                    <TableCell align="right">{product?.price}</TableCell>
+                    <TableCell align="right">{product?.description}</TableCell>
+                    <TableCell align="right"><img src={product?.image} alt="" width={100} /></TableCell>
+                    <TableCell align="right">{product?.category?.name}</TableCell>
                     <TableCell align="right">
                       <Stack
                         direction={"row"}
@@ -118,6 +127,9 @@ function AdminProductList() {
           </TableContainer>
         </Stack>
       </Container>
+      {loading && (
+        <Loading />
+      )}
     </>
   );
 }

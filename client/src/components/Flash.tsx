@@ -1,18 +1,22 @@
 import { Alert, Snackbar } from "@mui/material";
+import { useState } from "react";
 
 type FlashProps = {
-  isShow: boolean;
+  isCheck: any
 };
 
-function Flash({ isShow }: FlashProps) {
+function Flash({ isCheck }: FlashProps) {
+
+  const [show, setShow] = useState(isCheck.isShow);
+
   return (
     <Snackbar
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isShow}
-      onClose={() => {}}
-      autoHideDuration={1000}
+      open={show}
+      onClose={() => setShow(false)}
+      autoHideDuration={2000}
     >
-      <Alert severity="success">This is a success Alert.</Alert>
+      <Alert severity={isCheck.type}>{isCheck.content}</Alert>
     </Snackbar>
   );
 }

@@ -8,13 +8,21 @@ import ProductDetail from "./pages/Home/ProductDetail";
 import HomeLayout from "./layouts/HomeLayout";
 import Register from "./pages/Home/Register";
 import Login from "./pages/Home/Login";
-import NotFound from "./components/NotFound";
+import NotFound from "./components/Notfound";
+import { GlobalContext } from "./context";
+import { useState } from "react";
+import { Box } from "@mui/material";
+import Flash from "./components/Flash";
 
 const routeConfig = [
   {
     path: "/admin",
     element: <AdminLayout />,
     children: [
+      {
+        path: "",
+        element: <h1>Dashboard</h1>,
+      },
       {
         path: "product/list",
         element: <AdminProductList />,
@@ -29,7 +37,7 @@ const routeConfig = [
       },
       {
         path: 'NotFound',
-        element: <NotFound/>
+        element: <NotFound />
       }
     ],
   },
@@ -47,15 +55,15 @@ const routeConfig = [
       },
       {
         path: 'register',
-        element: <Register/>
+        element: <Register />
       },
       {
         path: "login",
-        element: <Login/>,
+        element: <Login />,
       },
       {
         path: 'NotFound',
-        element: <NotFound/>
+        element: <NotFound />
       }
     ],
   },
@@ -63,8 +71,15 @@ const routeConfig = [
 
 function App() {
   const routes = useRoutes(routeConfig);
-
-  return <main>{routes}</main>;
+  const [loading, setLoading] = useState<boolean>(false);
+  const [flash, setFlash] = useState<any>({ isShow: true, type: "error", content: "error" });
+  
+  return (
+    <GlobalContext.Provider value={{ loading, setLoading, setFlash }}>
+      <Box>{routes}</Box>
+      <Flash isCheck={flash} />
+    </GlobalContext.Provider>
+  );
 }
 
 export default App;

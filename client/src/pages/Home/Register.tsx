@@ -32,59 +32,61 @@ const Register = () => {
     try {
       await axios.post("/auth/register", data);
       nav("/login");
-    } catch (error) {}
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
     <Container sx={{ height: "100vh", padding: "20px" }}>
       <Stack maxWidth="sm" sx={{ padding: 2, margin: "auto", border: "1px solid #ccc", borderRadius: 5, display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h2" textAlign={"center"} mb={2}>
-        Register
-      </Typography>
-      <Form
-        onSubmit={onSubmit}
-        validate={validate}
-        render={({ values }) => {
-          return (
-            <Stack gap={2}>
-              <Field
-                name="username"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Username"}
-                    messageError={meta.touched && meta.error}
-                  />
-                )}
-              />
-              <Field
-                name="email"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Email"}
-                    messageError={meta.touched && meta.error}
-                  />
-                )}
-              />
-              <Field
-                name="password"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Password"}
-                    messageError={meta.touched && meta.error}
-                    type="password"
-                  />
-                )}
-              />
-              <Button variant="contained" onClick={() => onSubmit(values)}>
-                Submit
-              </Button>
-            </Stack>
-          );
-        }}
-      />
+        <Typography variant="h2" textAlign={"center"} mb={2}>
+          Register
+        </Typography>
+        <Form
+          onSubmit={onSubmit}
+          validate={validate}
+          render={({ values }) => {
+            return (
+              <Stack gap={2}>
+                <Field
+                  name="username"
+                  render={({ input, meta }) => (
+                    <InputText
+                      input={input}
+                      label={"Username"}
+                      messageError={meta.touched && meta.error}
+                    />
+                  )}
+                />
+                <Field
+                  name="email"
+                  render={({ input, meta }) => (
+                    <InputText
+                      input={input}
+                      label={"Email"}
+                      messageError={meta.touched && meta.error}
+                    />
+                  )}
+                />
+                <Field
+                  name="password"
+                  render={({ input, meta }) => (
+                    <InputText
+                      input={input}
+                      label={"Password"}
+                      messageError={meta.touched && meta.error}
+                      type="password"
+                    />
+                  )}
+                />
+                <Button variant="contained" onClick={() => onSubmit(values)}>
+                  Submit
+                </Button>
+              </Stack>
+            );
+          }}
+        />
       </Stack>
     </Container>
   );

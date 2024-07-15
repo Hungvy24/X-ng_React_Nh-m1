@@ -9,7 +9,7 @@ import { Product } from 'src/types/Product'
 
 const Homepage = () => {
   const [products, setProducts] = useState<Product[]>([])
-  useEffect(()=>{
+  useEffect(() => {
     const getAllProduct = async () => {
       try {
         const { data } = await axios.get("/products")
@@ -22,17 +22,17 @@ const Homepage = () => {
   })
   return (
     <>
-    <Banner/>
-    <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{margin: "10px", textAlign: "center"}}>Sản phẩm mới nhất</Typography>
-      <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px", padding: "10px", width: "100%" }}>
-      {products.map((product:Product) => (
-            <Card sx={{ maxWidth: 345, margin: "10px" }}>
-            <CardMedia 
+      <Banner />
+      <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{ margin: "10px", textAlign: "center" }}>Latest product</Typography>
+      <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px 0", padding: "10px 0", width: "100%" }}>
+        {products.map((product: Product) => (
+          <Card sx={{ maxWidth: 345, margin: "10px", padding: "6px" }}>
+            <CardMedia
               component="img"
               alt="green iguana"
               height="140"
               image={product.image}
-              sx={{ objectFit: "contain", height: "200px" }} 
+              sx={{ objectFit: "contain", height: "200px" }}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -45,14 +45,14 @@ const Homepage = () => {
                 {product.description}
               </Typography>
             </CardContent>
-            <CardActions sx={{ width: "100%", justifyContent: "center" }}>
-              <Button variant="contained" sx={{bgcolor: "green"}}>Share</Button>
-              <Button variant="contained" sx={{bgcolor: "red"}}>Learn More</Button>
-              <Link to={`/product/${product._id}`} style={{textDecoration: "none", color: "white"}}><Button variant="contained">Xem</Button></Link>
+            <CardActions sx={{ width: "100%" }}>
+              <Button variant="contained" sx={{ bgcolor: "green" }}>Add to cart</Button>
+              <Button variant="contained" sx={{ bgcolor: "red" }}>Learn More</Button>
+              <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "white" }}><Button variant="contained">View</Button></Link>
             </CardActions>
           </Card>
-          ))}
-          </Stack>
+        ))}
+      </Stack>
     </>
   )
 }

@@ -14,7 +14,7 @@ type LoginFormParams = {
 
 
 const Login = () => {
-    const naigate = useNavigate();
+  const naigate = useNavigate();
   const validate = (values: LoginFormParams) => {
     const { email, password } = values;
     const errors: ValidationErrors = {};
@@ -33,50 +33,50 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(data.user)); // luu object
       naigate("/");
     } catch (error) {
-        naigate('/NotFound')
+      alert("Tài khoản hoặc mật khẩu không chính xác")
     }
   };
 
   return (
     <Container sx={{ height: "100vh", padding: "20px" }}>
       <Stack maxWidth="sm" sx={{ padding: 2, margin: "auto", border: "1px solid #ccc", borderRadius: 5, display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h4" textAlign={"center"} mb={2}>
-        Login
-      </Typography>
-      <Form
-        onSubmit={onSubmit}
-        validate={validate}
-        render={({ values }) => {
-          return (
-            <Stack gap={2}>
-              <Field
-                name="email"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Email"}
-                    messageError={meta.touched && meta.error}
-                  />
-                )}
-              />
-              <Field
-                name="password"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Password"}
-                    messageError={meta.touched && meta.error}
-                    type="password"
-                  />
-                )}
-              />
-              <Button variant="contained" onClick={() => onSubmit(values)}>
-                Submit
-              </Button>
-            </Stack>
-          );
-        }}
-      />
+        <Typography variant="h4" textAlign={"center"} mb={2}>
+          Login
+        </Typography>
+        <Form
+          onSubmit={onSubmit}
+          validate={validate}
+          render={({ values }) => {
+            return (
+              <Stack gap={2}>
+                <Field
+                  name="email"
+                  render={({ input, meta }) => (
+                    <InputText
+                      input={input}
+                      label={"Email"}
+                      messageError={meta.touched && meta.error}
+                    />
+                  )}
+                />
+                <Field
+                  name="password"
+                  render={({ input, meta }) => (
+                    <InputText
+                      input={input}
+                      label={"Password"}
+                      messageError={meta.touched && meta.error}
+                      type="password"
+                    />
+                  )}
+                />
+                <Button variant="contained" onClick={() => onSubmit(values)}>
+                  Submit
+                </Button>
+              </Stack>
+            );
+          }}
+        />
       </Stack>
     </Container>
   );
