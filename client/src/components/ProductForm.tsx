@@ -119,7 +119,7 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
               }}
             />
 
-            <Button type="submit" onClick={() => onSubmit(values)}>
+            <Button type="submit" variant="contained" sx={{marginTop: "16px"}}onClick={() => onSubmit(values)}>
               Submit
             </Button>
           </Stack>

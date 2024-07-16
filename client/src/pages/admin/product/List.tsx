@@ -16,8 +16,8 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axiosInstance from "src/axios/instance";
 import ConfirmDialog from "src/components/ConfirmDialog";
-import Flash from "src/components/Flash";
 import Loading from "src/components/Loading";
 import NotFound from "src/components/Notfound";
 import { useGlobalContext } from "src/context";
@@ -28,12 +28,12 @@ function AdminProductList() {
   const [confirm, setConfirm] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [idDelete, setIdDelete] = useState<string | null>(null);
-  const { loading, setLoading } = useGlobalContext()
+  const { loading, setLoading, setFlash } = useGlobalContext()
 
   const getAllProduct = async () => {
     try {
       setLoading(true)
-      const { data } = await axios.get("/products");
+      const { data } = await axiosInstance.get("/products");
       setProducts(data);
     } catch (error) {
       return <NotFound />
@@ -56,9 +56,11 @@ function AdminProductList() {
       setLoading(true)
       await axios.delete("/products/" + idDelete);
       setShowFlash(true);
+      setFlash((state: any) => ({ ...state, isShow: true, type: "success", content: "Xóa thành công!" }))
       getAllProduct();
     } catch (error) {
       console.log(error);
+      setFlash((state: any) => ({ ...state, isShow: true, type: "error", content: "Xóa thất bại" }))
     } finally {
       setLoading(false);
     }

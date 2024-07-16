@@ -5,15 +5,13 @@ type FlashProps = {
   isCheck: any
 };
 
-function Flash({ isCheck }: FlashProps) {
-
-  const [show, setShow] = useState(isCheck.isShow);
-
+function Flash({ isCheck, setFlash }: any) {
+  
   return (
     <Snackbar
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      open={show}
-      onClose={() => setShow(false)}
+      open={isCheck.isShow}
+      onClose={() => setFlash((state:any) => ({...state, isShow: false, type: "", content: ""}))}
       autoHideDuration={2000}
     >
       <Alert severity={isCheck.type}>{isCheck.content}</Alert>

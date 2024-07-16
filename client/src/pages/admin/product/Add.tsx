@@ -23,13 +23,15 @@ import { ProductForm } from "src/types/Product";
 
 function AdminProductAdd() {
   const nav = useNavigate();
-  const { loading, setLoading } = useGlobalContext()
+  const { loading, setLoading, setFlash} = useGlobalContext()
   const onSubmit = async (values: ProductForm) => {
     try {
       setLoading(true)
-      await axios.post("/product22s", values);
+      await axios.post("/products", values);
+      setFlash((state: any) => ({...state,isShow: true , type: "success", content: "Thêm thành công"}))
       nav("/admin/product/list");
     } catch (error) {
+      setFlash((state: any) => ({...state,isShow: true , type: "error", content: "Thêm thất bại"}))
       return <NotFound />
     } finally {
       setLoading(false)
@@ -63,7 +65,6 @@ function AdminProductAdd() {
                   <Field
                     name="title"
                     render={({ input, meta }) => {
-                      console.log(meta);
 
                       return (
                         <TextField
@@ -154,7 +155,7 @@ function AdminProductAdd() {
                     }}
                   />
 
-                  <Button type="submit" onClick={() => onSubmit(values)}>
+                  <Button type="submit" variant="contained" onClick={() => onSubmit(values)} sx={{ marginTop: "16px" }}>
                     Submit
                   </Button>
                 </Stack>

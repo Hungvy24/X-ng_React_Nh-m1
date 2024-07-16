@@ -72,12 +72,14 @@ const routeConfig = [
 function App() {
   const routes = useRoutes(routeConfig);
   const [loading, setLoading] = useState<boolean>(false);
-  const [flash, setFlash] = useState<any>({ isShow: true, type: "error", content: "error" });
-  
+  const [flash, setFlash] = useState<any>({ isShow: false, type: "", content: "" });
+
   return (
     <GlobalContext.Provider value={{ loading, setLoading, setFlash }}>
-      <Box>{routes}</Box>
-      <Flash isCheck={flash} />
+      <Box>
+        {routes}
+        <Flash isCheck={flash} setFlash={setFlash} />
+      </Box>
     </GlobalContext.Provider>
   );
 }

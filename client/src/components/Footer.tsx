@@ -10,7 +10,7 @@ const Footer = (props: Props) => {
         direction={"row"}
         justifyContent={"center"}
         alignItems={"center"}
-        sx={{width: "100%", height: "50px", backgroundColor: "blue", color: "white", padding: "20px 0", marginBottom: "10px", marginTop: "50px"}}
+        sx={{width: "100%", height: "50px", backgroundColor: "#551a8b", color: "white", padding: "10px 0", marginBottom: "10px", marginTop: "50px"}}
       >
         <Typography>© 20214. All rights reserved.</Typography>
         <Typography>Nhóm 1 </Typography>
