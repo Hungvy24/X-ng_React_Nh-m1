@@ -11,7 +11,7 @@ import Login from "./pages/Home/Login";
 import NotFound from "./components/Notfound";
 import { GlobalContext } from "./context";
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Flash from "./components/Flash";
 
 const routeConfig = [
@@ -21,7 +21,9 @@ const routeConfig = [
     children: [
       {
         path: "",
-        element: <h1>Dashboard</h1>,
+        element: <Typography variant="h3" textAlign={"center"} mt={"50px"}>
+        Dashboard
+      </Typography>,
       },
       {
         path: "product/list",
@@ -78,8 +80,8 @@ function App() {
     <GlobalContext.Provider value={{ loading, setLoading, setFlash }}>
       <Box>
         {routes}
-        <Flash isCheck={flash} setFlash={setFlash} />
       </Box>
+      <Flash isCheck={flash} setFlash={setFlash} />
     </GlobalContext.Provider>
   );
 }

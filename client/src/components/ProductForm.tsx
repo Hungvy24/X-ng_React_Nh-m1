@@ -13,6 +13,7 @@ import { ValidationErrors } from "final-form";
 import { Field, Form } from "react-final-form";
 import { ProductFormParams } from "src/types/Product";
 import { InputText } from "./element/InputText";
+import { useGlobalContext } from "src/context";
 
 type ProductFormProps = {
   onSubmit: (values: ProductFormParams) => void;
@@ -20,14 +21,17 @@ type ProductFormProps = {
 };
 
 function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
+  const { setFlash } = useGlobalContext();
+
   const validate = (values: ProductFormParams) => {
-    const { title, image, category, price } = values;
+    const { title, image, category, price, description } = values;
     const errors: ValidationErrors = {};
     if (!title) errors.title = "Can nhap title vao";
     if (title && title.length < 6)
       errors.title = "Can nhap toi thieu 6 ky tu vao";
     if (!image) errors.image = "Can nhap image vao";
     if (!category) errors.category = "Can nhap category vao";
+    if (!description) errors.description = "Can nhap description vao";
     if (!price) errors.price = "Can nhap price vao";
     return errors;
   };
@@ -99,7 +103,11 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
                 return (
                   <FormControl fullWidth>
                     <InputLabel>Category</InputLabel>
-                    <Select label="Category" {...input} error>
+                    <Select
+                      label="Category"
+                      {...input}
+                      error={meta.touched && meta.error ? true : false}
+                    >
                       <MenuItem value="">Select</MenuItem>
                       <MenuItem value={"6693a6e23e21098d9255638c"}>
                         Điện thoại
@@ -119,7 +127,28 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
               }}
             />
 
-            <Button type="submit" variant="contained" sx={{marginTop: "16px"}}onClick={() => onSubmit(values)}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                marginTop: "16px",
+                padding: "12px 0",
+                backgroundColor: "#551a8b",
+                ":hover": {
+                  backgroundColor: "#551a8b",
+                },
+              }}
+              onClick={() =>
+                Object.keys(validate(values)).length == 0
+                  ? onSubmit(values)
+                  : setFlash((state: any) => ({
+                      ...state,
+                      isShow: true,
+                      type: "warning",
+                      content: "Vui lòng nhập chính xác thông tin",
+                    }))
+              }
+            >
               Submit
             </Button>
           </Stack>

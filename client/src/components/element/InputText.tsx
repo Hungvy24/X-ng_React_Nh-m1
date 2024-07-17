@@ -15,6 +15,9 @@ export function InputText({
 }: InputTextProps) {
   return (
     <TextField
+      sx={{
+        margin: "16px 0"
+      }}
       error={!!messageError}
       label={label}
       variant="standard"

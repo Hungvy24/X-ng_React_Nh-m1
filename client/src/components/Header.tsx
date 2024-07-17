@@ -20,10 +20,11 @@ const menus = [
   {
     label: "Login",
     link: "/login",
-  },{
+  },
+  {
     label: "Register",
     link: "/register",
-  }
+  },
 ];
 
 const Header = () => {
@@ -34,7 +35,13 @@ const Header = () => {
       justifyContent={"space-between"}
       alignItems={"center"}
     >
-      <img src="https://images.vexels.com/content/224138/preview/abstract-wavy-violet-logo-2321b7.png " alt="logo" width={"60px"} />
+      <Link to="">
+        <img
+          src="https://images.vexels.com/content/224138/preview/abstract-wavy-violet-logo-2321b7.png "
+          alt="logo"
+          width={"60px"}
+        />
+      </Link>
       <Stack direction={"row"} gap={"55px"}>
         {/* menu */}
         {menus.map((menu, index) => (

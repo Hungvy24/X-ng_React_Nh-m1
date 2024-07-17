@@ -4,6 +4,7 @@ import { ValidationErrors } from "final-form";
 import { Field, Form } from "react-final-form";
 import { useNavigate } from "react-router-dom";
 import { InputText } from "src/components/element/InputText";
+import { useGlobalContext } from "src/context";
 import { MIN_PASSWORD } from "src/conts";
 import isEmail from "validator/lib/isEmail";
 
@@ -12,9 +13,10 @@ type LoginFormParams = {
   password: string;
 };
 
-
 const Login = () => {
   const naigate = useNavigate();
+  const {setFlash } = useGlobalContext()
+
   const validate = (values: LoginFormParams) => {
     const { email, password } = values;
     const errors: ValidationErrors = {};
@@ -31,15 +33,27 @@ const Login = () => {
       const { data } = await axios.post("/auth/login", values);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user)); // luu object
+      setFlash((state: any) => ({ ...state, isShow: true, type: "success", content: "Đăng nhập thành công" }))
       naigate("/");
     } catch (error) {
-      alert("Tài khoản hoặc mật khẩu không chính xác")
+      setFlash((state: any) => ({ ...state, isShow: true, type: "error", content: "Tài khoản hoặc mật khẩu không chính xác" }))
     }
   };
 
   return (
     <Container sx={{ height: "100vh", padding: "20px" }}>
-      <Stack maxWidth="sm" sx={{ padding: 2, margin: "auto", border: "1px solid #ccc", borderRadius: 5, display: "flex", flexDirection: "column", gap: 2 }}>
+      <Stack
+        maxWidth="sm"
+        sx={{
+          padding: 2,
+          margin: "auto",
+          border: "1px solid #ccc",
+          borderRadius: 5,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
         <Typography variant="h4" textAlign={"center"} mb={2}>
           Login
         </Typography>

@@ -28,15 +28,15 @@ function AdminProductList() {
   const [confirm, setConfirm] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [idDelete, setIdDelete] = useState<string | null>(null);
-  const { loading, setLoading, setFlash } = useGlobalContext()
+  const { loading, setLoading, setFlash } = useGlobalContext();
 
   const getAllProduct = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const { data } = await axiosInstance.get("/products");
       setProducts(data);
     } catch (error) {
-      return <NotFound />
+      return <NotFound />;
     } finally {
       setLoading(false);
     }
@@ -53,14 +53,24 @@ function AdminProductList() {
 
   const handleDelete = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       await axios.delete("/products/" + idDelete);
       setShowFlash(true);
-      setFlash((state: any) => ({ ...state, isShow: true, type: "success", content: "Xóa thành công!" }))
+      setFlash((state: any) => ({
+        ...state,
+        isShow: true,
+        type: "success",
+        content: "Xóa thành công!",
+      }));
       getAllProduct();
     } catch (error) {
       console.log(error);
-      setFlash((state: any) => ({ ...state, isShow: true, type: "error", content: "Xóa thất bại" }))
+      setFlash((state: any) => ({
+        ...state,
+        isShow: true,
+        type: "error",
+        content: "Xóa thất bại",
+      }));
     } finally {
       setLoading(false);
     }
@@ -70,14 +80,24 @@ function AdminProductList() {
     <>
       <Container>
         <Stack gap={2}>
-          <Typography variant="h4" textAlign={"center"}>
+          <Typography variant="h3" textAlign={"center"} mt={"50px"}>
             Products List
           </Typography>
           <Link to="/admin/product/add">
-            <Button variant="contained">Add Product</Button>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#551a8b",
+                ":hover": {
+                  backgroundColor: "#551a8b",
+                },
+              }}
+            >
+              Add Product
+            </Button>
           </Link>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 1200 }} aria-label="simple table">
+            <Table sx={{}} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Title</TableCell>
@@ -99,15 +119,21 @@ function AdminProductList() {
                     </TableCell>
                     <TableCell align="right">{product?.price}</TableCell>
                     <TableCell align="right">{product?.description}</TableCell>
-                    <TableCell align="right"><img src={product?.image} alt="" width={100} /></TableCell>
-                    <TableCell align="right">{product?.category?.name}</TableCell>
+                    <TableCell align="right">
+                      <img src={product?.image} alt="" width={100} />
+                    </TableCell>
+                    <TableCell align="right">
+                      {product?.category?.name}
+                    </TableCell>
                     <TableCell align="right">
                       <Stack
                         direction={"row"}
                         gap={3}
                         justifyContent={"center"}
                       >
-                        <Link to={`/admin/product/edit/${product._id}`}><Button variant="contained">Edit</Button></Link>
+                        <Link to={`/admin/product/edit/${product._id}`}>
+                          <Button variant="contained">Edit</Button>
+                        </Link>
                         <Button
                           variant="contained"
                           sx={{ bgcolor: "red" }}
@@ -129,9 +155,7 @@ function AdminProductList() {
           </TableContainer>
         </Stack>
       </Container>
-      {loading && (
-        <Loading />
-      )}
+      {loading && <Loading />}
     </>
   );
 }
