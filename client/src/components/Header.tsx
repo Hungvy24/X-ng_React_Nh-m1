@@ -45,7 +45,7 @@ const Header = () => {
       <Stack direction={"row"} gap={"55px"}>
         {/* menu */}
         {menus.map((menu, index) => (
-          <Link to={menu.link} key={index} style={{ textDecoration: "none" }}>
+          <Link to={menu.link} key={index} style={{ textDecoration: "none", color: "black", }}>
             <Typography fontWeight={"500"}>{menu.label}</Typography>
           </Link>
         ))}

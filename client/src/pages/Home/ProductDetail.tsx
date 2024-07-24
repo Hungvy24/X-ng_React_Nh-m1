@@ -59,11 +59,11 @@ const ProductDetail = () => {
           justifyContent={"space-between"}
           alignItems={"start"}
         >
-          <Box width={"50%"}>
+          <Box width={"40%"}>
             <img src={product?.image} alt="" width={"100%"} />
           </Box>
           <Box width={"50%"}>
-            <Typography variant="h3">{product?.title}</Typography>
+            <Typography variant="h4" fontWeight={600}>{product?.title}</Typography>
             <Box
               sx={{
                 "& > legend": { mt: 2 },
@@ -77,10 +77,10 @@ const ProductDetail = () => {
                 }}
               />
             </Box>
-            <Typography variant="body2" mt={2} color={"#1a1e23"}>
+            <Typography variant="body2" mt={2} color={"#1a1e23"} sx={{ margin: "10px 0", textAlign: "justify", fontSize: "16px" }}>
               {product?.description}
             </Typography>
-            <Typography variant="h3" mt={2} fontSize={"30px"} fontWeight={600}>
+            <Typography variant="h3" mt={2} fontSize={"23px"} fontWeight={600} sx={{ margin: "10px 0", color: "red" }}>
               ${product?.price}
             </Typography>
             <Box position={"relative"} width={"90px"}>
