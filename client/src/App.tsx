@@ -13,6 +13,7 @@ import { GlobalContext } from "./context";
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Flash from "./components/Flash";
+import Products from "./pages/Home/Products";
 
 const routeConfig = [
   {
@@ -50,6 +51,10 @@ const routeConfig = [
       {
         path: "/",
         element: <Homepage />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
       },
       {
         path: "product/:id",

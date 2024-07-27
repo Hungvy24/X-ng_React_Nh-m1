@@ -6,6 +6,7 @@ export type Product = {
   description: string;
   category: Category;
   isShow: boolean;
+  createdAt: Date; 
 };
 
 export type Category = {

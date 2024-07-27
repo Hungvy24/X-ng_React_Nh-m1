@@ -11,7 +11,7 @@ const menus = [
   },
   {
     label: "Shop",
-    link: "/shop",
+    link: "/products",
   },
   {
     label: "About",

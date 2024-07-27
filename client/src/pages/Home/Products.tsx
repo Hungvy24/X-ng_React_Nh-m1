@@ -1,14 +1,13 @@
-
 import { Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Banner from 'src/components/Banner'
 import { Product } from 'src/types/Product'
 
+type Props = {}
 
-const Homepage = () => {
-  const [products, setProducts] = useState<Product[]>([])
+const Products = (props: Props) => {
+    const [products, setProducts] = useState<Product[]>([])
   useEffect(() => {
     const getAllProduct = async () => {
       try {
@@ -22,8 +21,7 @@ const Homepage = () => {
   },[])
   return (
     <>
-      <Banner />
-      <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{ margin: "10px", textAlign: "center" }}>Products new</Typography>
+        <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{ margin: "10px", textAlign: "center" }}>Latest product</Typography>
       <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px 0", padding: "10px 0", width: "100%", hover: "none" }}>
         {products.map((product: Product) => (
           <Card sx={{ maxWidth: 345, margin: "10px", padding: "6px", hover: "none", transform: "translateY(0)", transition: "all 0.3s ease-in-out", "&:hover": { transform: "translateY(-10px)" }, "&:hover img": { transform: "scale(1.1)" }, "&:hover .MuiCardContent-root": { transform: "translateY(0)" }, "&:hover .MuiCardActions-root": { transform: "translateY(0)" }, "&:hover .MuiTypography-root": { transform: "translateY(0)" }, "&:hover .MuiButton-root": { transform: "translateY(0)" } }}>
@@ -57,4 +55,4 @@ const Homepage = () => {
   )
 }
 
-export default Homepage
+export default Products
