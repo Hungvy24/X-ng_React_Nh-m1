@@ -21,6 +21,7 @@ const Products = (props: Props) => {
   },[])
   return (
     <>
+        <img src="https://au2-images.shop.samsung.com/medias/2000x600.jpg?context=bWFzdGVyfGltYWdlc3wxOTQ0NzR8aW1hZ2UvanBlZ3xoMzEvaDNkLzEzNDYxODMwNDAyMDc4fDYwNWE4ZDllYTU1NzUxZTgwNTVhZmEwMjMxMjFkZGFiYzAzM2Y3NTI0OTliMTkxNzIxMjNkNDJlZWZjM2U0NTg" width="100%" alt="" />
         <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{ margin: "10px", textAlign: "center" }}>Latest product</Typography>
       <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px 0", padding: "10px 0", width: "100%", hover: "none" }}>
         {products.map((product: Product) => (
@@ -30,7 +31,7 @@ const Products = (props: Props) => {
               alt="green iguana"
               height="140"
               image={product.image}
-              sx={{ objectFit: "contain", height: "200px" }}
+              sx={{ objectFit: "contain", height: "150px" }}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -39,14 +40,14 @@ const Products = (props: Props) => {
               <Typography gutterBottom variant="body1" component="div" color="red" fontWeight="bold">
                 {product.price}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ height: "100px" }}>
+              <Typography variant="body2" color="text.secondary" sx={{ minHeight: "50px" }}>
                 {product.description}
               </Typography>
             </CardContent>
-            <CardActions sx={{ width: "100%", transform: "translateY(250%)", transition: "all 0.6s ease-in-out", "&:hover": { transform: "translateY(0)" } }}>
-              <Button variant="contained" sx={{ bgcolor: "green" }}>Add to cart</Button>
-              <Button variant="contained" sx={{ bgcolor: "red" }}>Learn More</Button>
-              <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "white" }}><Button variant="contained">View</Button></Link>
+            <CardActions sx={{ width: "100%", justifyContent: "center" ,transform: "translateY(350%)", transition: "all 0.3s ease-in-out !important", "&:hover": { transform: "translateY(0)" } }}>
+              <Button variant="contained" sx={{ bgcolor: "red", width: "50%" }}>Add to cart</Button>
+              {/* <Button variant="contained" sx={{ bgcolor: "red" }}>Learn More</Button> */}
+              <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "white" }}><Button variant="contained" sx={{  width: "120px" }}>View</Button></Link>
             </CardActions>
           </Card>
         ))}

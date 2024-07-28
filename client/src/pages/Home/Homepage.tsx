@@ -25,8 +25,8 @@ const Homepage = () => {
       <Banner />
       <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{ margin: "10px", textAlign: "center" }}>Products new</Typography>
       <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px 0", padding: "10px 0", width: "100%", hover: "none" }}>
-        {products.map((product: Product) => (
-          <Card sx={{ maxWidth: 345, margin: "10px", padding: "6px", hover: "none", transform: "translateY(0)", transition: "all 0.3s ease-in-out", "&:hover": { transform: "translateY(-10px)" }, "&:hover img": { transform: "scale(1.1)" }, "&:hover .MuiCardContent-root": { transform: "translateY(0)" }, "&:hover .MuiCardActions-root": { transform: "translateY(0)" }, "&:hover .MuiTypography-root": { transform: "translateY(0)" }, "&:hover .MuiButton-root": { transform: "translateY(0)" } }}>
+        {products.map((product: Product, index) => (
+          <Card key={index} sx={{ maxWidth: 345, margin: "10px", padding: "6px", hover: "none", transform: "translateY(0)", transition: "all 0.3s ease-in-out", "&:hover": { transform: "translateY(-10px)" }, "&:hover img": { transform: "scale(1.1)" }, "&:hover .MuiCardContent-root": { transform: "translateY(0)" }, "&:hover .MuiCardActions-root": { transform: "translateY(0)" }, "&:hover .MuiTypography-root": { transform: "translateY(0)" }, "&:hover .MuiButton-root": { transform: "translateY(0)" } }}>
             <CardMedia
               component="img"
               alt="green iguana"
@@ -41,14 +41,14 @@ const Homepage = () => {
               <Typography gutterBottom variant="body1" component="div" color="red" fontWeight="bold">
                 {product.price}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ height: "100px" }}>
+              <Typography variant="body2" color="text.secondary" sx={{ minHeight: "50px" }}>
                 {product.description}
               </Typography>
             </CardContent>
-            <CardActions sx={{ width: "100%", transform: "translateY(250%)", transition: "all 0.6s ease-in-out", "&:hover": { transform: "translateY(0)" } }}>
-              <Button variant="contained" sx={{ bgcolor: "green" }}>Add to cart</Button>
-              <Button variant="contained" sx={{ bgcolor: "red" }}>Learn More</Button>
-              <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "white" }}><Button variant="contained">View</Button></Link>
+            <CardActions sx={{ width: "100%", justifyContent: "center", transform: "translateY(350%)", transition: "all 0.6s ease-in-out", "&:hover": { transform: "translateY(0)" } }}>
+              <Button variant="contained" sx={{ bgcolor: "red", width: "50%" }}>Add to cart</Button>
+              {/* <Button variant="contained" sx={{ bgcolor: "red", width: "40%" }}>Learn More</Button> */}
+              <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "white" }}><Button variant="contained" sx={{  width: "120px" }}>View</Button></Link>
             </CardActions>
           </Card>
         ))}

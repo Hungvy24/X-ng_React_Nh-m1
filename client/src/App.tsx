@@ -14,6 +14,8 @@ import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Flash from "./components/Flash";
 import Products from "./pages/Home/Products";
+import Loading from "./components/Loading";
+import Cart from "./pages/Home/Cart";
 
 const routeConfig = [
   {
@@ -69,6 +71,10 @@ const routeConfig = [
         element: <Login />,
       },
       {
+        path: 'cart',
+        element: <Cart/>
+      },
+      {
         path: 'NotFound',
         element: <NotFound />
       }
@@ -79,14 +85,17 @@ const routeConfig = [
 function App() {
   const routes = useRoutes(routeConfig);
   const [loading, setLoading] = useState<boolean>(false);
-  const [flash, setFlash] = useState<any>({ isShow: false, type: "", content: "" });
+  const [flash, setFlash] = useState<any>({
+    isShow: false,
+    type: "",
+    content: "",
+  });
 
   return (
     <GlobalContext.Provider value={{ loading, setLoading, setFlash }}>
-      <Box>
-        {routes}
-      </Box>
+      <Box>{routes}</Box>
       <Flash isCheck={flash} setFlash={setFlash} />
+      {loading && <Loading />}
     </GlobalContext.Provider>
   );
 }

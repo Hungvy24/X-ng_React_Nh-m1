@@ -1,8 +1,10 @@
-import { Box, Stack, styled, Typography } from "@mui/material";
+import { Badge, Box, Stack, styled, Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useCart } from "src/context/cart";
+import { useMemo } from "react";
 
 const menus = [
   {
@@ -28,6 +30,14 @@ const menus = [
 ];
 
 const Header = () => {
+  const { cart } = useCart(); 
+  const cartQuantity = useMemo(
+    () =>
+      cart
+        ? cart.products.reduce((total, { quantity }) => total + quantity, 0)
+        : 0,
+    [cart]
+  );
   return (
     <Wrapper
       sx={{ padding: "0 50px" }}
@@ -55,7 +65,11 @@ const Header = () => {
         {/* <img src="./user.svg" alt="user" /> */}
         <SearchIcon />
         <FavoriteBorderIcon />
-        {/* <img src="./cart.svg" alt="cart" /> */}
+        <Link to={"/cart"}>
+          <Badge badgeContent={cartQuantity} color="secondary">
+            <img src="/cart.svg" alt="cart" />
+          </Badge>
+        </Link>
       </Stack>
     </Wrapper>
   );
