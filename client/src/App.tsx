@@ -17,6 +17,7 @@ import Products from "./pages/Home/Products";
 import Loading from "./components/Loading";
 import Cart from "./pages/Home/Cart";
 
+
 const routeConfig = [
   {
     path: "/admin",
@@ -24,9 +25,11 @@ const routeConfig = [
     children: [
       {
         path: "",
-        element: <Typography variant="h3" textAlign={"center"} mt={"50px"}>
-        Dashboard
-      </Typography>,
+        element: (
+          <Typography variant="h3" textAlign={"center"} mt={"50px"}>
+            Dashboard
+          </Typography>
+        ),
       },
       {
         path: "product/list",
@@ -41,9 +44,9 @@ const routeConfig = [
         element: <AdminProductEdit />,
       },
       {
-        path: 'NotFound',
-        element: <NotFound />
-      }
+        path: "NotFound",
+        element: <NotFound />,
+      },
     ],
   },
   {
@@ -63,8 +66,8 @@ const routeConfig = [
         element: <ProductDetail />,
       },
       {
-        path: 'register',
-        element: <Register />
+        path: "register",
+        element: <Register />,
       },
       {
         path: "login",

@@ -1,59 +1,111 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from '@mui/material'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Product } from 'src/types/Product'
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import useFetchData from "src/hooks/useFetchData";
+import { Product } from "src/types/Product";
 
-type Props = {}
-
-const Products = (props: Props) => {
-    const [products, setProducts] = useState<Product[]>([])
-  useEffect(() => {
-    const getAllProduct = async () => {
-      try {
-        const { data } = await axios.get("/products")
-        setProducts(data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getAllProduct()
-  },[])
+const Products = () => {
+  const { datas: products } = useFetchData("/products");
   return (
     <>
-        <img src="https://au2-images.shop.samsung.com/medias/2000x600.jpg?context=bWFzdGVyfGltYWdlc3wxOTQ0NzR8aW1hZ2UvanBlZ3xoMzEvaDNkLzEzNDYxODMwNDAyMDc4fDYwNWE4ZDllYTU1NzUxZTgwNTVhZmEwMjMxMjFkZGFiYzAzM2Y3NTI0OTliMTkxNzIxMjNkNDJlZWZjM2U0NTg" width="100%" alt="" />
-        <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{ margin: "10px", textAlign: "center" }}>Latest product</Typography>
-      <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px 0", padding: "10px 0", width: "100%", hover: "none" }}>
+      <Typography
+        component="h1"
+        fontSize={"26px"}
+        fontWeight={"bold"}
+        sx={{ margin: "10px", textAlign: "center" }}
+      >
+        Latest product
+      </Typography>
+      <Stack
+        direction={"row"}
+        gap={1}
+        sx={{
+          justifyContent: "center",
+          flexWrap: "wrap",
+          margin: "10px 0",
+          padding: "10px 0",
+          width: "100%",
+          hover: "none",
+        }}
+      >
         {products.map((product: Product) => (
-          <Card sx={{ maxWidth: 345, margin: "10px", padding: "6px", hover: "none", transform: "translateY(0)", transition: "all 0.3s ease-in-out", "&:hover": { transform: "translateY(-10px)" }, "&:hover img": { transform: "scale(1.1)" }, "&:hover .MuiCardContent-root": { transform: "translateY(0)" }, "&:hover .MuiCardActions-root": { transform: "translateY(0)" }, "&:hover .MuiTypography-root": { transform: "translateY(0)" }, "&:hover .MuiButton-root": { transform: "translateY(0)" } }}>
+          <Card
+            sx={{
+              maxWidth: 345,
+              margin: "10px",
+              padding: "6px",
+              hover: "none",
+              transform: "translateY(0)",
+              transition: "all 0.3s ease-in-out",
+              "&:hover": { transform: "translateY(-10px)" },
+              "&:hover img": { transform: "scale(1.1)" },
+              "&:hover .MuiCardContent-root": { transform: "translateY(0)" },
+              "&:hover .MuiCardActions-root": { transform: "translateY(0)" },
+              "&:hover .MuiTypography-root": { transform: "translateY(0)" },
+              "&:hover .MuiButton-root": { transform: "translateY(0)" },
+            }}
+          >
             <CardMedia
               component="img"
               alt="green iguana"
               height="140"
               image={product.image}
-              sx={{ objectFit: "contain", height: "150px" }}
+              sx={{ objectFit: "contain", height: "200px" }}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {product.title}
               </Typography>
-              <Typography gutterBottom variant="body1" component="div" color="red" fontWeight="bold">
+              <Typography
+                gutterBottom
+                variant="body1"
+                component="div"
+                color="red"
+                fontWeight="bold"
+              >
                 {product.price}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ minHeight: "50px" }}>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ minHeight: "50px" }}
+              >
                 {product.description}
               </Typography>
             </CardContent>
-            <CardActions sx={{ width: "100%", justifyContent: "center" ,transform: "translateY(350%)", transition: "all 0.3s ease-in-out !important", "&:hover": { transform: "translateY(0)" } }}>
-              <Button variant="contained" sx={{ bgcolor: "red", width: "50%" }}>Add to cart</Button>
-              {/* <Button variant="contained" sx={{ bgcolor: "red" }}>Learn More</Button> */}
-              <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "white" }}><Button variant="contained" sx={{  width: "120px" }}>View</Button></Link>
+            <CardActions
+              sx={{
+                width: "100%",
+                transform: "translateY(350%)",
+                transition: "all 0.4s ease-in-out !important",
+                "&:hover": { transform: "translateY(0)" },
+              }}
+            >
+              <Button variant="contained" sx={{ bgcolor: "green", width: "50%" }}>
+                Add to cart
+              </Button>
+              {/* <Button variant="contained" sx={{ bgcolor: "red" }}>
+                Learn More
+              </Button> */}
+              <Link
+                to={`/product/${product._id}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Button variant="contained" sx={{  width: "120px" }}>View</Button>
+              </Link>
             </CardActions>
           </Card>
         ))}
       </Stack>
     </>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;
