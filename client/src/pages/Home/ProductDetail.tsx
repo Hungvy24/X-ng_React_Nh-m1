@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  CircularProgress,
   Divider,
   List,
   ListItem,
@@ -12,44 +11,19 @@ import {
   Stack,
   TextField,
   Typography,
-
 } from "@mui/material";
 
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { Product } from "src/types/Product";
-import { useGlobalContext } from "src/context";
-import Loading from "src/components/Loading";
+import useFetchData from "src/hooks/useFetchData";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { loading, setLoading } = useGlobalContext()
-  const [product, setProduct] = useState<Product>();
   const [quantity, setQuantity] = useState<number>(1);
   const [value, setValue] = useState<number | null>(2);
-
-  const handlerGetProduct = async () => {
-    setLoading(true);
-    try {
-      const { data } = await axios.get("http://localhost:3000/products/" + id);
-      setProduct(data);
-    } catch (error) {
-      alert(error);
-      navigate("/NotFound");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  console.log(quantity);
-
-  useEffect(() => {
-    handlerGetProduct();
-  }, []);
+  const { datas: product } = useFetchData("/products/" + id);
 
   return (
     <>
@@ -63,7 +37,9 @@ const ProductDetail = () => {
             <img src={product?.image} alt="" width={"100%"} />
           </Box>
           <Box width={"50%"}>
-            <Typography variant="h4" fontWeight={600}>{product?.title}</Typography>
+            <Typography variant="h4" fontWeight={600}>
+              {product?.title}
+            </Typography>
             <Box
               sx={{
                 "& > legend": { mt: 2 },
@@ -77,10 +53,21 @@ const ProductDetail = () => {
                 }}
               />
             </Box>
-            <Typography variant="body2" mt={2} color={"#1a1e23"} sx={{ margin: "10px 0", textAlign: "justify", fontSize: "16px" }}>
+            <Typography
+              variant="body2"
+              mt={2}
+              color={"#1a1e23"}
+              sx={{ margin: "10px 0", textAlign: "justify", fontSize: "16px" }}
+            >
               {product?.description}
             </Typography>
-            <Typography variant="h3" mt={2} fontSize={"23px"} fontWeight={600} sx={{ margin: "10px 0", color: "red" }}>
+            <Typography
+              variant="h3"
+              mt={2}
+              fontSize={"23px"}
+              fontWeight={600}
+              sx={{ margin: "10px 0", color: "red" }}
+            >
               ${product?.price}
             </Typography>
             <Box position={"relative"} width={"90px"}>
@@ -222,9 +209,6 @@ const ProductDetail = () => {
           </Box>
         </Box>
       </Box>
-      {loading && (
-        <Loading />
-      )}
     </>
   );
 };

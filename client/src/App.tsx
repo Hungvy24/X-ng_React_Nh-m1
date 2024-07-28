@@ -13,6 +13,8 @@ import { GlobalContext } from "./context";
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Flash from "./components/Flash";
+import Products from "./pages/Home/Products";
+import Loading from "./components/Loading";
 
 const routeConfig = [
   {
@@ -21,9 +23,11 @@ const routeConfig = [
     children: [
       {
         path: "",
-        element: <Typography variant="h3" textAlign={"center"} mt={"50px"}>
-        Dashboard
-      </Typography>,
+        element: (
+          <Typography variant="h3" textAlign={"center"} mt={"50px"}>
+            Dashboard
+          </Typography>
+        ),
       },
       {
         path: "product/list",
@@ -38,9 +42,9 @@ const routeConfig = [
         element: <AdminProductEdit />,
       },
       {
-        path: 'NotFound',
-        element: <NotFound />
-      }
+        path: "NotFound",
+        element: <NotFound />,
+      },
     ],
   },
   {
@@ -56,17 +60,21 @@ const routeConfig = [
         element: <ProductDetail />,
       },
       {
-        path: 'register',
-        element: <Register />
+        path: "/products",
+        element: <Products />,
+      },
+      {
+        path: "register",
+        element: <Register />,
       },
       {
         path: "login",
         element: <Login />,
       },
       {
-        path: 'NotFound',
-        element: <NotFound />
-      }
+        path: "NotFound",
+        element: <NotFound />,
+      },
     ],
   },
 ];
@@ -74,14 +82,17 @@ const routeConfig = [
 function App() {
   const routes = useRoutes(routeConfig);
   const [loading, setLoading] = useState<boolean>(false);
-  const [flash, setFlash] = useState<any>({ isShow: false, type: "", content: "" });
+  const [flash, setFlash] = useState<any>({
+    isShow: false,
+    type: "",
+    content: "",
+  });
 
   return (
     <GlobalContext.Provider value={{ loading, setLoading, setFlash }}>
-      <Box>
-        {routes}
-      </Box>
+      <Box>{routes}</Box>
       <Flash isCheck={flash} setFlash={setFlash} />
+      {loading && <Loading />}
     </GlobalContext.Provider>
   );
 }

@@ -8,15 +8,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import Banner from "src/components/Banner";
 import useFetchData from "src/hooks/useFetchData";
 import { Product } from "src/types/Product";
 
-const Homepage = () => {
-  const { datas: products } = useFetchData("products");
+const Products = () => {
+  const { datas: products } = useFetchData("/products");
   return (
     <>
-      <Banner />
       <Typography
         component="h1"
         fontSize={"26px"}
@@ -77,7 +75,7 @@ const Homepage = () => {
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ height: "100px" }}
+                sx={{ minHeight: "50px" }}
               >
                 {product.description}
               </Typography>
@@ -110,4 +108,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default Products;
