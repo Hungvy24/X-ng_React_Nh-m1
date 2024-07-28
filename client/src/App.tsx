@@ -14,7 +14,10 @@ import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Flash from "./components/Flash";
 import Products from "./pages/Home/Products";
+<<<<<<< HEAD
 import Loading from "./components/Loading";
+=======
+>>>>>>> 30f7436980ffc62d67e8406c6ab0c9f5424947c6
 
 const routeConfig = [
   {
@@ -54,6 +57,10 @@ const routeConfig = [
       {
         path: "/",
         element: <Homepage />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
       },
       {
         path: "product/:id",

@@ -81,7 +81,7 @@ function AdminProductList() {
       <Container>
         <Stack gap={2}>
           <Typography variant="h3" textAlign={"center"} mt={"50px"}>
-            Products List
+            {/* Products List */}
           </Typography>
           <Link to="/admin/product/add">
             <Button

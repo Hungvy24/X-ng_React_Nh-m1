@@ -13,6 +13,7 @@ import useFetchData from "src/hooks/useFetchData";
 import { Product } from "src/types/Product";
 
 const Homepage = () => {
+<<<<<<< HEAD
   const { datas: products } = useFetchData("products");
   return (
     <>
@@ -37,6 +38,25 @@ const Homepage = () => {
           hover: "none",
         }}
       >
+=======
+  const [products, setProducts] = useState<Product[]>([])
+  useEffect(() => {
+    const getAllProduct = async () => {
+      try {
+        const { data } = await axios.get("/products")
+        setProducts(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getAllProduct()
+  },[])
+  return (
+    <>
+      <Banner />
+      <Typography component="h1" fontSize={"26px"} fontWeight={"bold"} sx={{ margin: "10px", textAlign: "center" }}>Products new</Typography>
+      <Stack direction={"row"} gap={1} sx={{ justifyContent: "center", flexWrap: "wrap", margin: "10px 0", padding: "10px 0", width: "100%", hover: "none" }}>
+>>>>>>> 30f7436980ffc62d67e8406c6ab0c9f5424947c6
         {products.map((product: Product) => (
           <Card
             sx={{
