@@ -14,10 +14,11 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmDialog from "src/components/ConfirmDialog";
 import Flash from "src/components/Flash";
+import { ProductContext } from "src/conts/ProductProvider";
 import { Product } from "src/types/Product";
 
 function AdminProductList() {
@@ -25,6 +26,21 @@ function AdminProductList() {
   const [confirm, setConfirm] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [idDelete, setIdDelete] = useState<string | null>(null);
+  const [value, setValue] = useState("");
+  const [arrange, setArrange] = useState("");
+  const [fillterPro, setFilterPro] = useState<Product[]>([]);
+  const [dispathProducts] = useContext(ProductContext);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get("products");
+      dispathProducts({
+        type: "SET_PRODUCT",
+        payload: data.data,
+      });
+      setFilterPro(data.data);
+    })();
+  }, []);
 
   const getAllProduct = async () => {
     try {
@@ -54,13 +70,31 @@ function AdminProductList() {
     }
   };
 
+  useEffect(() => {
+    let filterProduct = [...products];
+    if (value) {
+      filterProduct = filterProduct.filter((pro: Product) =>
+        pro.title.toLowerCase().includes(value.toLowerCase())
+      );
+    }
+
+    if (arrange === "ascending") {
+      filterProduct.sort((a: Product, b: Product) => a.price - b.price);
+    }
+    if (arrange === "descending") {
+      filterProduct.sort((a: Product, b: Product) => b.price - a.price);
+    }
+
+    setFilterPro(filterProduct);
+  }, [value, arrange, products]);
+
   return (
     <>
       <Container>
         <Flash isShow={showFlash} />
         <Stack gap={2}>
           <Typography variant="h4" textAlign={"center"}>
-              Products List
+            Products List
           </Typography>
           <Link to="/admin/product/add">
             <Button variant="contained">Add Product</Button>
@@ -82,13 +116,16 @@ function AdminProductList() {
                   <TableRow
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    onchange={(e) => setValue(e.target.value)}
                   >
                     <TableCell component="th" scope="row">
                       {product.title}
                     </TableCell>
                     <TableCell align="right">{product.price}</TableCell>
                     <TableCell align="right">{product.description}</TableCell>
-                    <TableCell align="right"><img src={product.image} alt="" width={100} /></TableCell>
+                    <TableCell align="right">
+                      <img src={product.image} alt="" width={100} />
+                    </TableCell>
                     <TableCell align="right">{product.category.name}</TableCell>
                     <TableCell align="right">
                       <Stack
@@ -96,7 +133,9 @@ function AdminProductList() {
                         gap={3}
                         justifyContent={"center"}
                       >
-                        <Link to={""}><Button variant="contained">Edit</Button></Link>
+                        <Link to={""}>
+                          <Button variant="contained">Edit</Button>
+                        </Link>
                         <Button
                           variant="contained"
                           sx={{ bgcolor: "red" }}

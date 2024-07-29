@@ -1,38 +1,37 @@
-import {
-  Avatar,
-  Button,
-  Container,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
 import axios from "axios";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { ValidationErrors } from "final-form";
+import { Field, Form } from "react-final-form";
 import { useNavigate } from "react-router-dom";
+import { InputText } from "src/components/Element/InputText";
+import { MIN_PASSWORD } from "src/conts";
 
-type RegisterFormParams = {
+type LoginFormParams = {
   email: string;
   password: string;
 };
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormParams>();
+  const naigate = useNavigate();
+  const validate = (values: LoginFormParams) => {
+    const { email, password } = values;
+    const errors: ValidationErrors = {};
+    if (!email) errors.email = "Can nhap email vao";
+    if (email && !isEmail(email)) errors.email = "Chua dung dinh dang email";
+    if (!password) errors.password = "Can nhap password vao";
+    if (password && password.length < MIN_PASSWORD)
+      errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
+    return errors;
+  };
 
-  const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<RegisterFormParams> = async (data) => {
+  const onSubmit = async (values: LoginFormParams) => {
     try {
-      const res = await axios.post("http://localhost:3000/login", data);
-      console.log(data);
-      localStorage.setItem("accessToken", res.data.accessToken);
-      alert("Đăng nhập thành công");
-      navigate("/");
+      const { data } = await axios.post("/auth/login", values);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user)); // luu object
+      naigate("/");
     } catch (error) {
-      navigate("/NotFound");
+      naigate("/NotFound");
     }
   };
 
@@ -50,46 +49,43 @@ const Login = () => {
           gap: 2,
         }}
       >
-        <Avatar
-          sx={{ margin: "auto" }}
-          alt="Remy Sharp"
-          src="/static/images/avatar/1.jpg"
-        />
-        <Typography variant="h5" textAlign={"center"} mb={2}>
+        <Typography variant="h4" textAlign={"center"} mb={2}>
           Login
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack gap={2}>
-            <TextField
-              label="Email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "invalid email address",
-                },
-              })}
-              error={!!errors?.email?.message}
-              helperText={errors?.email?.message}
-            />
-            <TextField
-              label="Password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password is min length 6 characters",
-                },
-              })}
-              type="password"
-              error={!!errors?.password?.message}
-              helperText={errors?.password?.message}
-            />
-            <Button type="submit" variant="contained">
-              Submit
-            </Button>
-          </Stack>
-        </form>
+        <Form
+          onSubmit={onSubmit}
+          validate={validate}
+          render={({ values }) => {
+            return (
+              <Stack gap={2}>
+                <Field
+                  name="email"
+                  render={({ input, meta }) => (
+                    <InputText
+                      input={input}
+                      label={"Email"}
+                      messageError={meta.touched && meta.error}
+                    />
+                  )}
+                />
+                <Field
+                  name="password"
+                  render={({ input, meta }) => (
+                    <InputText
+                      input={input}
+                      label={"Password"}
+                      messageError={meta.touched && meta.error}
+                      type="password"
+                    />
+                  )}
+                />
+                <Button variant="contained" onClick={() => onSubmit(values)}>
+                  Submit
+                </Button>
+              </Stack>
+            );
+          }}
+        />
       </Stack>
     </Container>
   );
