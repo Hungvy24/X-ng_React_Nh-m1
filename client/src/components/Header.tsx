@@ -18,15 +18,7 @@ const menus = [
   {
     label: "About",
     link: "/about",
-  },
-  {
-    label: "Login",
-    link: "/login",
-  },
-  {
-    label: "Register",
-    link: "/register",
-  },
+  }
 ];
 
 const Header = () => {
@@ -62,11 +54,13 @@ const Header = () => {
       </Stack>
       <Stack gap={"45px"} direction={"row"}>
         {/* icon  */}
-        {/* <img src="./user.svg" alt="user" /> */}
+        <Link to={"/login"}>
+          <img src="/user.svg" alt="user" />
+        </Link>
         <SearchIcon />
         <FavoriteBorderIcon />
         <Link to={"/cart"}>
-          <Badge badgeContent={cartQuantity} color="secondary">
+          <Badge badgeContent={cartQuantity} color="error">
             <img src="/cart.svg" alt="cart" />
           </Badge>
         </Link>
@@ -81,4 +75,5 @@ const Wrapper = styled(Stack)({
   height: 100,
   padding: "0 50px",
   textDecoration: "none",
+  
 });

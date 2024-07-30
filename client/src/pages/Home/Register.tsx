@@ -1,8 +1,16 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 import axios from "axios";
 import { ValidationErrors } from "final-form";
 import { Field, Form } from "react-final-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InputText } from "src/components/element/InputText";
 import { MIN_PASSWORD } from "src/conts";
 import isEmail from "validator/lib/isEmail";
@@ -39,8 +47,33 @@ const Register = () => {
 
   return (
     <Container sx={{ height: "100vh", padding: "20px" }}>
-      <Stack maxWidth="sm" sx={{ padding: 2, margin: "auto", border: "1px solid #ccc", borderRadius: 5, display: "flex", flexDirection: "column", gap: 2 }}>
-        <Typography variant="h2" textAlign={"center"} mb={2}>
+      <Stack
+        maxWidth="sm"
+        sx={{
+          padding: 2,
+          margin: "auto",
+          border: "1px solid #ccc",
+          borderRadius: 5,
+          display: "flex",
+          flexDirection: "column",
+          // gap: 2,
+        }}
+      >
+        <Box
+          sx={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Avatar
+            sx={{ bgcolor: deepOrange[500] }}
+            alt="Remy Sharp"
+            src="/broken-image.jpg"
+          />
+        </Box>
+        <Typography variant="h5" textAlign={"center"} mb={2}>
           Register
         </Typography>
         <Form
@@ -83,6 +116,11 @@ const Register = () => {
                 <Button variant="contained" onClick={() => onSubmit(values)}>
                   Submit
                 </Button>
+                  <Box sx={{ textAlign: "center", justifyContent: 'space-between', display: 'flex', textDecoration: 'none' }}>
+                <Link to="/forgot-password" >Forgot password?</Link>
+                <Link to="/login" >
+                Do you already have an account? Login</Link>
+                </Box>
               </Stack>
             );
           }}

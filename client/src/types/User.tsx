@@ -3,3 +3,10 @@ export type User = {
     email: string;
     username: string;
   };
+
+export type Adress = {
+  _id: string;
+  address: string;
+  user: string;
+  phone: string;
+}

@@ -7,14 +7,24 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import useFetchData from "src/hooks/useFetchData";
+import { useProductCart } from "src/hooks/useProdutCart";
 import { Product } from "src/types/Product";
 
 const Products = () => {
   const { datas: products } = useFetchData("/products");
+  const [quantity, setQuantity] = useState<number>(1);
+  const { addToCart } = useProductCart();
+
+  const handleAddToCart = (product: Product) => {
+    if (quantity <= 0) return;
+    addToCart({ product, quantity });
+  };
   return (
     <>
+    <img src="https://tienganhnghenoi.vn/wp-content/uploads/2023/09/banner-iphone-7-min.jpg" width="100%" height={"500px"} />
       <Typography
         component="h1"
         fontSize={"26px"}
@@ -81,14 +91,16 @@ const Products = () => {
               </Typography>
             </CardContent>
             <CardActions
-              sx={{
+              sx={{ 
+                display: "flex", 
+                justifyContent: "center",
                 width: "100%",
                 transform: "translateY(350%)",
                 transition: "all 0.4s ease-in-out !important",
                 "&:hover": { transform: "translateY(0)" },
               }}
             >
-              <Button variant="contained" sx={{ bgcolor: "green", width: "50%" }}>
+              <Button variant="contained" sx={{ bgcolor: "green", width: "50%" }} onClick={() => handleAddToCart(product)}>
                 Add to cart
               </Button>
               {/* <Button variant="contained" sx={{ bgcolor: "red" }}>

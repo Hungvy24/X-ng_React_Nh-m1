@@ -18,13 +18,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import useFetchData from "src/hooks/useFetchData";
+import { Product } from "src/types/Product";
+import { useProductCart } from "src/hooks/useProdutCart";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState<number>(1);
   const [value, setValue] = useState<number | null>(2);
   const { datas: product } = useFetchData("/products/" + id);
+  const { addToCart } = useProductCart();
 
+  const handleAddToCart = (product: Product) => {
+    if (quantity <= 0) return;
+    addToCart({ product, quantity });
+  };
   return (
     <>
       <Box width={"1200px"} mx={"auto"}>
@@ -122,7 +129,7 @@ const ProductDetail = () => {
               </Box>
             </Box>
             <Stack spacing={2} direction="row">
-              <Button variant="contained" sx={{ height: "55px" }} fullWidth>
+              <Button variant="contained" sx={{ height: "55px" }} fullWidth onClick={() => handleAddToCart(product)}>
                 Add to cart
               </Button>
               <Button variant="outlined" sx={{ height: "55px" }} fullWidth>

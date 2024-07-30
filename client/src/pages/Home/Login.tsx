@@ -1,8 +1,10 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Label } from "@mui/icons-material";
+import { Avatar, Box, Button, Checkbox, Container, Stack, Typography } from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 import axios from "axios";
 import { ValidationErrors } from "final-form";
 import { Field, Form } from "react-final-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InputText } from "src/components/element/InputText";
 import { useGlobalContext } from "src/context";
 import { MIN_PASSWORD } from "src/conts";
@@ -15,7 +17,8 @@ type LoginFormParams = {
 
 const Login = () => {
   const naigate = useNavigate();
-  const {setFlash } = useGlobalContext()
+  const { setFlash } = useGlobalContext();
+  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
   const validate = (values: LoginFormParams) => {
     const { email, password } = values;
@@ -33,10 +36,20 @@ const Login = () => {
       const { data } = await axios.post("/auth/login", values);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user)); // luu object
-      setFlash((state: any) => ({ ...state, isShow: true, type: "success", content: "Đăng nhập thành công" }))
+      setFlash((state: any) => ({
+        ...state,
+        isShow: true,
+        type: "success",
+        content: "Đăng nhập thành công",
+      }));
       naigate("/");
     } catch (error) {
-      setFlash((state: any) => ({ ...state, isShow: true, type: "error", content: "Tài khoản hoặc mật khẩu không chính xác" }))
+      setFlash((state: any) => ({
+        ...state,
+        isShow: true,
+        type: "error",
+        content: "Tài khoản hoặc mật khẩu không chính xác",
+      }));
     }
   };
 
@@ -51,10 +64,19 @@ const Login = () => {
           borderRadius: 5,
           display: "flex",
           flexDirection: "column",
-          gap: 2,
+          // gap: 2,
+          // width: "40%",
         }}
       >
-        <Typography variant="h4" textAlign={"center"} mb={2}>
+        <Box sx={{ textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center" }}>
+
+        <Avatar
+          sx={{ bgcolor: deepOrange[500] }}
+          alt="Remy Sharp"
+          src="/broken-image.jpg"
+        />
+        </Box>
+        <Typography variant="h5" textAlign={"center"} mb={2}>
           Login
         </Typography>
         <Form
@@ -87,6 +109,11 @@ const Login = () => {
                 <Button variant="contained" onClick={() => onSubmit(values)}>
                   Submit
                 </Button>
+                  <Box sx={{ textAlign: "center", justifyContent: 'space-between', display: 'flex', textDecoration: 'none' }}>
+                <Link to="/forgot-password" >Forgot password?</Link>
+                <Link to="/register" >
+                Don't have an account? Sign Up</Link>
+                </Box>
               </Stack>
             );
           }}

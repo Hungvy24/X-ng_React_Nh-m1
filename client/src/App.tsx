@@ -16,6 +16,7 @@ import Flash from "./components/Flash";
 import Products from "./pages/Home/Products";
 import Loading from "./components/Loading";
 import Cart from "./pages/Home/Cart";
+import Checkout from "./pages/Home/Checkout";
 
 
 const routeConfig = [
@@ -76,6 +77,10 @@ const routeConfig = [
       {
         path: 'cart',
         element: <Cart/>
+      },
+      {
+        path: 'checkout',
+        element: <Checkout/>
       },
       {
         path: 'NotFound',

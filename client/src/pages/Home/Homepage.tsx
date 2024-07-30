@@ -4,11 +4,19 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Banner from 'src/components/Banner'
+import { useProductCart } from 'src/hooks/useProdutCart'
 import { Product } from 'src/types/Product'
 
 
 const Homepage = () => {
   const [products, setProducts] = useState<Product[]>([])
+  const [quantity, setQuantity] = useState<number>(1);
+  const { addToCart } = useProductCart();
+
+  const handleAddToCart = (product: Product) => {
+    if (quantity <= 0) return;
+    addToCart({ product, quantity });
+  };
   useEffect(() => {
     const getAllProduct = async () => {
       try {
@@ -45,8 +53,8 @@ const Homepage = () => {
                 {product.description}
               </Typography>
             </CardContent>
-            <CardActions sx={{ width: "100%", justifyContent: "center", transform: "translateY(350%)", transition: "all 0.6s ease-in-out", "&:hover": { transform: "translateY(0)" } }}>
-              <Button variant="contained" sx={{ bgcolor: "red", width: "50%" }}>Add to cart</Button>
+            <CardActions sx={{ width: "100%", justifyContent: "center", transform: "translateY(350%)", transition: "all 0.4s ease-in-out !important", "&:hover": { transform: "translateY(0)" } }}>
+              <Button variant="contained" sx={{ bgcolor: "red", width: "50%" }} onClick={() => handleAddToCart(product)}>Add to cart</Button>
               {/* <Button variant="contained" sx={{ bgcolor: "red", width: "40%" }}>Learn More</Button> */}
               <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "white" }}><Button variant="contained" sx={{  width: "120px" }}>View</Button></Link>
             </CardActions>
