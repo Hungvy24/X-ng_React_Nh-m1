@@ -12,6 +12,6 @@ cartsRouter.get("/user/:id", cartsController.getCartUser);
 cartsRouter.post("/", cartsController.createCart);
 cartsRouter.put("/:id", cartsController.updateProductCart);
 cartsRouter.delete("/:id", cartsController.deleteCart);
-cartsRouter.delete("/product/:id", cartsController.deleteProductCart);
+cartsRouter.delete("/user/:userId/product/:productId", cartsController.deleteProductCart);
 
 export default cartsRouter;

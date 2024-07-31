@@ -48,6 +48,8 @@ function Checkout() {
   );
 
   const onSubmit = async (values: CheckoutFormParams) => {
+    console.log(values);
+
     if (!user || !cart || !cart?.products.length) return;
     try {
       // setLoading(true);
@@ -141,11 +143,13 @@ function Checkout() {
                               value="COD"
                               control={<Radio />}
                               label="COD"
+                              name="payment"
                             />
                             <FormControlLabel
                               value="BANK"
                               control={<Radio />}
                               label="BANK"
+                              name="payment"
                             />
                           </RadioGroup>
                         </FormControl>
@@ -203,6 +207,7 @@ function Checkout() {
                 <Typography fontWeight={500}>
                   <img src={item.product.image} alt="" width={"50px"} />
                 </Typography>
+                <Typography fontWeight={500}> {item.product.title}đ</Typography>
                 <Typography fontWeight={500}> {item.product.price}đ</Typography>
                 <Typography fontWeight={500}> {item.quantity}</Typography>
               </Stack>
@@ -221,7 +226,7 @@ function Checkout() {
             <Box sx={{ fontWeight: "bold", fontSize: "18px", color: "red" }}>
               Total:
             </Box>
-            {totalPrice}
+            {totalPrice}đ
           </Typography>
           <Button
             variant="contained"

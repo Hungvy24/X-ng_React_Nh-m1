@@ -33,7 +33,7 @@ function Cart() {
             ))}
           </LabelWrapper>
           {/* Cart Item */}
-          <Stack gap={3} my={3} direction={"column"} sx={{ overflow: "auto", }}>
+          <Stack gap={3} my={3} direction={"column"} sx={{ overflow: "auto" }}>
             {cart?.products.map((item, index) => (
               <Stack
                 key={index}
@@ -56,17 +56,20 @@ function Cart() {
                 <IconButton onClick={() => removeToCart(item.product._id)}>
                   <DeleteIcon sx={{ color: "red" }} />
                 </IconButton>
-                
               </Stack>
             ))}
           </Stack>
           <Stack>
-                  <Link to="/checkout">
-                    <Button variant="contained" sx={{ mb: 10 }} fullWidth>
-                      Checkout
-                    </Button>
-                  </Link>
-                </Stack>
+            <Link to="/checkout">
+              <Button
+                variant="contained"
+                sx={{ mb: 10, backgroundColor: "#551a8b" }}
+                fullWidth
+              >
+                Checkout
+              </Button>
+            </Link>
+          </Stack>
         </Wrapper>
       </Container>
     </>
