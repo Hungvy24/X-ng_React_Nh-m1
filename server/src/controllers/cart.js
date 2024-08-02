@@ -108,9 +108,7 @@ class CartsController {
   }
   async deleteProductCart(req, res, next) {
     try {
-      const { id } = req.params;
-      const { user } = req.body;
-
+      const { productId:id,userId:user } = req.params;
       const cart = await Cart.findOne({ user });
       if (!cart) throw new ApiError(404, "Cart Not Found");
 
