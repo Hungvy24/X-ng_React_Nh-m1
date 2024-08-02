@@ -81,7 +81,7 @@ function AdminProductList() {
       setLoading(false);
     }
   };
-
+  console.log(products);
   return (
     <>
       <Container>
@@ -89,7 +89,6 @@ function AdminProductList() {
           <Typography variant="h4" textAlign={"center"}>
             Products List
           </Typography>
-          =======
           <Typography variant="h3" textAlign={"center"} mt={"50px"}>
             {/* Products List */}
           </Typography>
@@ -132,8 +131,7 @@ function AdminProductList() {
                     <TableCell align="right">
                       <img src={product.image} alt="" width={100} />
                     </TableCell>
-                    <TableCell align="right">{product.category.name}</TableCell>
-                    =======
+                    {/* <TableCell align="right">{product.category.name}</TableCell> */}
                     <TableCell align="right">{product?.price}</TableCell>
                     <TableCell align="right">{product?.description}</TableCell>
                     <TableCell align="right">

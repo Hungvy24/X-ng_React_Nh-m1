@@ -4,23 +4,23 @@ import PrimarySearchAppBar from "src/components/NavBar";
 import Sidebar from "src/components/Sidebar";
 
 function AdminLayout() {
-
   const nav = useNavigate();
 
+  // const user = localStorage.getItem('user');
 
-  const user = localStorage.getItem('user');
-
-  if (!user) {
-    nav("/login")
-  }
+  // if (!user) {
+  //   nav("/login")
+  // }
 
   return (
     <>
       <Box display={"flex"} justifyContent={"space-between"}>
-        <Box><Sidebar /></Box>
+        <Box>
+          <Sidebar />
+        </Box>
         <Box width={"84%"}>
-        <PrimarySearchAppBar />
-        <Outlet />
+          <PrimarySearchAppBar />
+          <Outlet />
         </Box>
       </Box>
     </>
