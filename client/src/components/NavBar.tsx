@@ -184,7 +184,7 @@ export default function PrimarySearchAppBar() {
         },
       }}
     >
-      <AppBar position="static">
+      <AppBar position="relative">
         <Toolbar>
           <IconButton
             size="large"
@@ -205,8 +205,8 @@ export default function PrimarySearchAppBar() {
               inputProps={{ "aria-label": "search" }}
               onChange={handleSearchChange}
             />
-            {/* Hiển thị danh sách sản phẩm đã lọc */}
           </Search>
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
@@ -252,6 +252,51 @@ export default function PrimarySearchAppBar() {
             </IconButton>
           </Box>
         </Toolbar>
+        {searchValue && (
+          <div
+            style={{
+              position: "absolute",
+              backgroundColor: "#551a8b",
+              top: "9.5%",
+              left: "23%",
+              maxWidth: "500px",
+              padding: "10px",
+              zIndex: 9999,
+            }}
+          >
+            {filteredProducts && filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <div key={product._id}>
+                  <Typography
+                    variant="body1"
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        maxWidth: "100px",
+                      }}
+                    >
+                      <img
+                        style={{ width: "100%", borderRadius: "10px" }}
+                        src={product.image}
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h5>{product.title}</h5>
+                      <span>${product.price.toFixed(1)}</span>
+                    </div>
+                  </Typography>
+                </div>
+              ))
+            ) : (
+              <div>Không có sản phẩm bạn cần tìm ...</div>
+            )}
+          </div>
+        )}
       </AppBar>
       {renderMobileMenu}
       {renderMenu}

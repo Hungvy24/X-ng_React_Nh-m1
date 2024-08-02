@@ -16,14 +16,10 @@ export const ProductContext = createContext(
 export const ProductProvider = (props: Props) => {
   const [products, dispathProducts] = useReducer(reducerPro, [] as Product[]);
   useEffect(() => {
-    async () => {
+    (async () => {
       const { data } = await axiosInstance.get("/products");
-      console.log(data);
-      dispathProducts({
-        type: "SET_PRODUCT",
-        payload: data,
-      });
-    };
+      dispathProducts({ type: "SET_PRODUCT", payload: data });
+    })();
   }, []);
   return (
     <ProductContext.Provider value={{ products, dispathProducts }}>

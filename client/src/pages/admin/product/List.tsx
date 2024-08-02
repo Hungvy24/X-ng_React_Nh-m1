@@ -81,7 +81,6 @@ function AdminProductList() {
       setLoading(false);
     }
   };
-  console.log(products);
   return (
     <>
       <Container>
