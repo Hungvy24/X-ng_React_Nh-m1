@@ -4,27 +4,81 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axiosInstance from "src/axios/instance";
 import useFetchData from "src/hooks/useFetchData";
 import { useProductCart } from "src/hooks/useProdutCart";
-import { Product } from "src/types/Product";
+import { Category, Product } from "src/types/Product";
 
 const Products = () => {
   const { datas: products } = useFetchData("/products");
   const [quantity, setQuantity] = useState<number>(1);
   const { addToCart } = useProductCart();
-
+  const [category, setCategory] = useState<Category[]>([]);
+  // Tạo state productFilter đêt dữ liệu sau mỗi khi lọc
+  const [productFilter, setProductFilter] = useState<Product[]>([]);
   const handleAddToCart = (product: Product) => {
     if (quantity <= 0) return;
     addToCart({ product, quantity });
   };
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axiosInstance.get("/categories");
+      setCategory(data);
+    })();
+  }, []);
+
+  // cập nhật dữ liệu ban đầu khi chưa lọc
+  useEffect(() => {
+    setProductFilter(products);
+  }, [products]);
+
+  // Khi click vào một danh mục thì lấy ra id danh mục
+  const hanldeFilterPro = (cateid: string) => {
+    // nếu mà không lấy được id thì mặc định là dữ liệu ban đầu products
+    if (!cateid) {
+      setProductFilter(products);
+    } else {
+      // Nếu mà lấy được thì thực hiện kiểm tra trong mảng products có idCategory nào bằng với cateid danh mục click
+      const profilter = products.filter(
+        (item: Product) => item.category._id == cateid
+      );
+      // Nếu lấy được thì gọi setProductFilter
+      setProductFilter(profilter);
+    }
+  };
+
   return (
     <>
-    <img src="https://tienganhnghenoi.vn/wp-content/uploads/2023/09/banner-iphone-7-min.jpg" width="100%" height={"500px"} />
+      <img
+        src="https://tienganhnghenoi.vn/wp-content/uploads/2023/09/banner-iphone-7-min.jpg"
+        width="100%"
+        height={"500px"}
+      />
+      <FormControl sx={{ width: 200, margin: "10px", display: "flex" }}>
+        <InputLabel> Danh Mục</InputLabel>
+        <Select label="Danh Mục">
+          {category.map((cate) => (
+            <MenuItem
+              onClick={() => hanldeFilterPro(cate._id)}
+              key={cate._id}
+              value={cate._id}
+            >
+              {cate?.name}
+            </MenuItem>
+          ))}
+        </Select>
+        <Button variant="contained"> Filter </Button>
+      </FormControl>
       <Typography
         component="h1"
         fontSize={"26px"}
@@ -45,7 +99,7 @@ const Products = () => {
           hover: "none",
         }}
       >
-        {products.map((product: Product) => (
+        {productFilter.map((product: Product) => (
           <Card
             sx={{
               maxWidth: 345,
@@ -91,8 +145,8 @@ const Products = () => {
               </Typography>
             </CardContent>
             <CardActions
-              sx={{ 
-                display: "flex", 
+              sx={{
+                display: "flex",
                 justifyContent: "center",
                 width: "100%",
                 transform: "translateY(350%)",
@@ -100,7 +154,11 @@ const Products = () => {
                 "&:hover": { transform: "translateY(0)" },
               }}
             >
-              <Button variant="contained" sx={{ bgcolor: "green", width: "50%" }} onClick={() => handleAddToCart(product)}>
+              <Button
+                variant="contained"
+                sx={{ bgcolor: "green", width: "50%" }}
+                onClick={() => handleAddToCart(product)}
+              >
                 Add to cart
               </Button>
               {/* <Button variant="contained" sx={{ bgcolor: "red" }}>
@@ -110,7 +168,9 @@ const Products = () => {
                 to={`/product/${product._id}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
-                <Button variant="contained" sx={{  width: "120px" }}>View</Button>
+                <Button variant="contained" sx={{ width: "120px" }}>
+                  View
+                </Button>
               </Link>
             </CardActions>
           </Card>
