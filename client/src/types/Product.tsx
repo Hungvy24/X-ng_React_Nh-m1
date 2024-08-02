@@ -6,6 +6,7 @@ export type Product = {
   description: string;
   category: Category;
   isShow: boolean;
+  createdAt: Date; 
 };
 
 export type Category = {
@@ -21,4 +22,21 @@ export type ProductForm = {
   description: string;
   category: string;
   isShow: boolean;
+};
+export type ProductFormParams = {
+  title: string;
+  price: number;
+  image: string;
+  description: string;
+  category: string;
+  isShow: boolean;
+};
+export type CartItem = {
+  product: Product;
+  quantity: number;
+};
+export type Cart = {
+  _id: string;
+  user: string;
+  products: CartItem[];
 };

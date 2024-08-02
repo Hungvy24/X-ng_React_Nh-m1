@@ -7,14 +7,31 @@ import Homepage from "./pages/Home/Homepage";
 import ProductDetail from "./pages/Home/ProductDetail";
 import HomeLayout from "./layouts/HomeLayout";
 import Register from "./pages/Home/Register";
-import Notfound from "./components/Notfound";
 import Login from "./pages/Home/Login";
+import NotFound from "./components/Notfound";
+import { GlobalContext } from "./context";
+import { useState } from "react";
+import { Box, Typography } from "@mui/material";
+import Flash from "./components/Flash";
+import Products from "./pages/Home/Products";
+import Loading from "./components/Loading";
+import Cart from "./pages/Home/Cart";
+import Checkout from "./pages/Home/Checkout";
+
 
 const routeConfig = [
   {
     path: "/admin",
     element: <AdminLayout />,
     children: [
+      {
+        path: "",
+        element: (
+          <Typography variant="h3" textAlign={"center"} mt={"50px"}>
+            Dashboard
+          </Typography>
+        ),
+      },
       {
         path: "product/list",
         element: <AdminProductList />,
@@ -27,6 +44,10 @@ const routeConfig = [
         path: "product/edit/:id",
         element: <AdminProductEdit />,
       },
+      {
+        path: "NotFound",
+        element: <NotFound />,
+      },
     ],
   },
   {
@@ -36,6 +57,10 @@ const routeConfig = [
       {
         path: "/",
         element: <Homepage />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
       },
       {
         path: "product/:id",
@@ -50,17 +75,37 @@ const routeConfig = [
         element: <Login />,
       },
       {
-        path: "not-found",
-        element: <Notfound />,
+        path: 'cart',
+        element: <Cart/>
       },
+      {
+        path: 'checkout',
+        element: <Checkout/>
+      },
+      {
+        path: 'NotFound',
+        element: <NotFound />
+      }
     ],
   },
 ];
 
 function App() {
   const routes = useRoutes(routeConfig);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [flash, setFlash] = useState<any>({
+    isShow: false,
+    type: "",
+    content: "",
+  });
 
-  return <main>{routes}</main>;
+  return (
+    <GlobalContext.Provider value={{ loading, setLoading, setFlash }}>
+      <Box>{routes}</Box>
+      <Flash isCheck={flash} setFlash={setFlash} />
+      {loading && <Loading />}
+    </GlobalContext.Provider>
+  );
 }
 
 export default App;

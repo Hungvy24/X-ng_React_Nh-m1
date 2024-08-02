@@ -1,37 +1,38 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Container,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
-import { ValidationErrors } from "final-form";
-import { Field, Form } from "react-final-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { InputText } from "src/components/Element/InputText";
-import { MIN_PASSWORD } from "src/conts";
 
-type LoginFormParams = {
+type RegisterFormParams = {
   email: string;
   password: string;
 };
 
 const Login = () => {
-  const naigate = useNavigate();
-  const validate = (values: LoginFormParams) => {
-    const { email, password } = values;
-    const errors: ValidationErrors = {};
-    if (!email) errors.email = "Can nhap email vao";
-    if (email && !isEmail(email)) errors.email = "Chua dung dinh dang email";
-    if (!password) errors.password = "Can nhap password vao";
-    if (password && password.length < MIN_PASSWORD)
-      errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
-    return errors;
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormParams>();
 
-  const onSubmit = async (values: LoginFormParams) => {
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<RegisterFormParams> = async (data) => {
     try {
-      const { data } = await axios.post("/auth/login", values);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user)); // luu object
-      naigate("/");
+      const res = await axios.post("http://localhost:3000/login", data);
+      console.log(data);
+      localStorage.setItem("accessToken", res.data.accessToken);
+      alert("Đăng nhập thành công");
+      navigate("/");
     } catch (error) {
-      naigate("/NotFound");
+      navigate("/NotFound");
     }
   };
 
@@ -46,46 +47,50 @@ const Login = () => {
           borderRadius: 5,
           display: "flex",
           flexDirection: "column",
-          gap: 2,
+          // gap: 2,
+          // width: "40%",
         }}
       >
-        <Typography variant="h4" textAlign={"center"} mb={2}>
+        <Avatar
+          sx={{ margin: "auto" }}
+          alt="Remy Sharp"
+          src="/static/images/avatar/1.jpg"
+        />
+        <Typography variant="h5" textAlign={"center"} mb={2}>
           Login
         </Typography>
-        <Form
-          onSubmit={onSubmit}
-          validate={validate}
-          render={({ values }) => {
-            return (
-              <Stack gap={2}>
-                <Field
-                  name="email"
-                  render={({ input, meta }) => (
-                    <InputText
-                      input={input}
-                      label={"Email"}
-                      messageError={meta.touched && meta.error}
-                    />
-                  )}
-                />
-                <Field
-                  name="password"
-                  render={({ input, meta }) => (
-                    <InputText
-                      input={input}
-                      label={"Password"}
-                      messageError={meta.touched && meta.error}
-                      type="password"
-                    />
-                  )}
-                />
-                <Button variant="contained" onClick={() => onSubmit(values)}>
-                  Submit
-                </Button>
-              </Stack>
-            );
-          }}
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack gap={2}>
+            <TextField
+              label="Email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "invalid email address",
+                },
+              })}
+              error={!!errors?.email?.message}
+              helperText={errors?.email?.message}
+            />
+            <TextField
+              label="Password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password is min length 6 characters",
+                },
+              })}
+              type="password"
+              error={!!errors?.password?.message}
+              helperText={errors?.password?.message}
+            />
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          </Stack>
+        </form>
       </Stack>
     </Container>
   );

@@ -1,11 +1,19 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 import axios from "axios";
 import { ValidationErrors } from "final-form";
-import IsEmail from "IsEmail";
 import { Field, Form } from "react-final-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InputText } from "src/components/Element/InputText";
 import { MIN_PASSWORD } from "src/conts";
+import isEmail from "validator/lib/isEmail";
 
 type RegisterFormParams = {
   username: string;
@@ -21,12 +29,10 @@ const Register = () => {
     const errors: ValidationErrors = {};
     if (!username) errors.username = "Can nhap username vao";
     if (!email) errors.email = "Can nhap email vao";
-    if (email && !IsEmail(email)) errors.email = "Chua dung dinh dang email";
+    if (email && !isEmail(email)) errors.email = "Chua dung dinh dang email";
     if (!password) errors.password = "Can nhap password vao";
     if (password && password.length < MIN_PASSWORD)
       errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
-    if (password !== values.confrimPassword)
-      errors.confrimPassword = "Password khong khop";
     return errors;
   };
 
@@ -34,7 +40,9 @@ const Register = () => {
     try {
       await axios.post("/auth/register", data);
       nav("/login");
-    } catch (error) {}
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
@@ -48,10 +56,24 @@ const Register = () => {
           borderRadius: 5,
           display: "flex",
           flexDirection: "column",
-          gap: 2,
+          // gap: 2,
         }}
       >
-        <Typography variant="h4" textAlign={"center"} mb={2}>
+        <Box
+          sx={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Avatar
+            sx={{ bgcolor: deepOrange[500] }}
+            alt="Remy Sharp"
+            src="/broken-image.jpg"
+          />
+        </Box>
+        <Typography variant="h5" textAlign={"center"} mb={2}>
           Register
         </Typography>
         <Form
@@ -94,6 +116,17 @@ const Register = () => {
                 <Button variant="contained" onClick={() => onSubmit(values)}>
                   Submit
                 </Button>
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    justifyContent: "space-between",
+                    display: "flex",
+                    textDecoration: "none",
+                  }}
+                >
+                  <Link to="/forgot-password">Forgot password?</Link>
+                  <Link to="/login">Do you already have an account? Login</Link>
+                </Box>
               </Stack>
             );
           }}

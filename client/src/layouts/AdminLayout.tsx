@@ -1,14 +1,28 @@
-import { Stack } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Box, Stack } from "@mui/material";
+import { Outlet, useNavigate } from "react-router-dom";
+import PrimarySearchAppBar from "src/components/NavBar";
 import Sidebar from "src/components/Sidebar";
 
 function AdminLayout() {
+
+  const nav = useNavigate();
+
+
+  const user = localStorage.getItem('user');
+
+  if (!user) {
+    nav("/login")
+  }
+
   return (
     <>
-      <Stack direction={"row"} gap={2}>
-        <Sidebar />
+      <Box display={"flex"} justifyContent={"space-between"}>
+        <Box><Sidebar /></Box>
+        <Box width={"84%"}>
+        <PrimarySearchAppBar />
         <Outlet />
-      </Stack>
+        </Box>
+      </Box>
     </>
   );
 }

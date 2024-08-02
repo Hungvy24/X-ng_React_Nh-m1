@@ -1,20 +1,17 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { Link } from "react-router-dom";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import { Box } from "@mui/material";
 
-const drawerWidth = 240;
+const drawerWidth = "16%";
 
 function Sidebar() {
   return (
@@ -25,24 +22,80 @@ function Sidebar() {
         "& .MuiDrawer-paper": {
           width: drawerWidth,
           boxSizing: "border-box",
+          
         },
       }}
       variant="permanent"
       anchor="left"
     >
-      <Toolbar />
+      <Box textAlign={"center"}>
+        <Link to="">
+          <img
+            src="https://images.vexels.com/content/224138/preview/abstract-wavy-violet-logo-2321b7.png "
+            alt="logo"
+            width={"60px"}
+          />
+        </Link>
+      </Box>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+        <Link to="/admin" style={{ display: "block", textDecoration: "none" }}>
+          <ListItem>
+            <ListItemButton sx={{display: "flex", gap: 1, alignItems: "center"}}>
+              <DashboardIcon sx={{
+                color: "#551a8b"
+              }} />
+              <ListItemText sx={{
+                color: "#551a8b"
+              }} primary={"Dashboard"} />
             </ListItemButton>
           </ListItem>
-        ))}
+        </Link>
+        <Link
+          to="/admin/product/list"
+          style={{ display: "block", textDecoration: "none" }}
+        >
+          <ListItem>
+            <ListItemButton sx={{display: "flex", gap: 1, alignItems: "center"}}>
+              <ListAltIcon sx={{
+                color: "#551a8b"
+              }} />
+              <ListItemText sx={{
+                color: "#551a8b"
+              }} primary={"List Product"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link
+          to="/admin/product/add"
+          style={{ display: "block", textDecoration: "none" }}
+        >
+          <ListItem>
+            <ListItemButton sx={{display: "flex", gap: 1, alignItems: "center"}}>
+              <AddCircleIcon sx={{
+                color: "#551a8b"
+              }}/>
+              <ListItemText sx={{
+                color: "#551a8b"
+              }} primary={"Add product"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link
+          to="/admin/product/add"
+          style={{ display: "block", textDecoration: "none" }}
+        >
+          <ListItem>
+            <ListItemButton sx={{display: "flex", gap: 1, alignItems: "center"}}>
+              <LeaderboardIcon sx={{
+                color: "#551a8b"
+              }}/>
+              <ListItemText sx={{
+                color: "#551a8b"
+              }} primary={"Statistical"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
     </Drawer>
   );
